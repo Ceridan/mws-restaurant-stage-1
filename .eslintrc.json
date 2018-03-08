@@ -22,6 +22,10 @@
       "error",
       "always"
     ],
-    "no-trailing-spaces": "error"
+    "no-trailing-spaces": "error",
+    "no-console": "off",
+    "no-useless-escape": "off",
+    "no-undef": "off",
+    "no-unused-vars": "off"
   }
 }
