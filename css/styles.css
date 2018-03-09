@@ -57,6 +57,11 @@ nav {
 }
 nav h1 {
   margin: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 nav h1 a {
   color: #fff;
@@ -65,13 +70,14 @@ nav h1 a {
   letter-spacing: 10px;
   text-transform: uppercase;
 }
+
 #breadcrumb {
-    padding: 10px 40px 16px;
-    list-style: none;
-    background-color: #eee;
-    font-size: 17px;
-    margin: 0;
-    width: calc(50% - 80px);
+  padding: 10px 40px 16px;
+  list-style: none;
+  background-color: #eee;
+  font-size: 17px;
+  margin: 0;
+  width: calc(50% - 80px);
 }
 
 /* Display list items side by side */
@@ -109,12 +115,14 @@ nav h1 a {
   height: 50px;
   background-color: #3397DB;
   align-items: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 .filter-options h2 {
   color: white;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: normal;
-  line-height: 1;
+  line-height: 2;
   margin: 0 20px;
 }
 .filter-options select {
@@ -143,7 +151,7 @@ nav h1 a {
   font-family: Arial,sans-serif;
   margin: 15px;
   min-height: 380px;
-  padding: 0 30px 25px;
+  padding: 5px 30px 25px;
   text-align: left;
   width: 270px;
 }
@@ -180,6 +188,11 @@ nav h1 a {
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* ====================== Restaurant Details ====================== */
@@ -272,4 +285,92 @@ nav h1 a {
 }
 #restaurant-hours td {
   color: #666;
+}
+
+/* ====================== Main page layout changes depends on screen width ====================== */
+@media screen and (max-width: 460px) {
+  .container {
+    justify-content: center;
+  }
+
+  #map-container,
+  .filter-options {
+    display: none;
+  }
+
+  .filter-options {
+    width: 221px;
+    height: 100%;
+    position: absolute;
+    top: 80px;
+    /* This trasform moves the drawer off canvas. */
+    -webkit-transform: translate(-300px, 0);
+    transform: translate(-300px, 0);
+    /* Optionally, we animate the drawer. */
+    transition: transform 0.3s ease;
+  }
+
+  .filter-options.open {
+    display: block;
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+
+  #restaurants-list {
+    padding: 10px 10px;
+  }
+
+  #restaurants-list {
+    padding: 10px 10px;
+  }
+
+  #restaurants-list li {
+    padding: 5px 10px 15px;
+  }
+
+  nav > h1 {
+    width: 80%;
+  }
+
+  #hamburger-menu {
+    display: block;
+    width: 20%;
+  }
+}
+
+@media screen and (min-width: 461px) and (max-width: 600px) {
+  .container {
+    justify-content: center;
+  }
+
+  #map-container {
+    display: none;
+  }
+
+  .filter-options {
+    display: block;
+    height: 100px;
+  }
+
+  .filter-options h2 {
+    line-height: 2;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 757px) {
+  .container {
+    justify-content: center;
+  }
+
+  #map-container {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  body {
+    width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

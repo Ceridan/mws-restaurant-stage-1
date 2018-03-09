@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Restaurant Reviews</title>
+
+  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <link rel="stylesheet" media="screen and (max-width: 450px)" href="css/hamburgermenu.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
   <header>
-    <nav>
+    <nav class="container">
+      <a id="hamburger-menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+        </svg>
+      </a>
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
   </header>
@@ -18,6 +27,7 @@
     <section id="map-container">
       <div id="map"></div>
     </section>
+
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
@@ -28,12 +38,13 @@
           <option value="all">All Cuisines</option>
         </select>
       </div>
-      <ul id="restaurants-list"></ul>
+      <ul id="restaurants-list" class="container"></ul>
     </section>
   </main>
 
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/hamburgermenu.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap"></script>
 
 
