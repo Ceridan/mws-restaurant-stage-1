@@ -365,6 +365,26 @@ nav h1 a {
   #map-container {
     display: none;
   }
+
+  #restaurants-list li {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 250px;
+    height: 250px;
+  }
+
+  #restaurants-list .restaurant-img {
+    min-width: 50%;
+    width: 50%;
+    height: 50%;
+  }
+
+  #restaurants-list li div {
+    width: calc(50% - 10px);
+    order: -1;
+    margin-right: 10px;
+  }
 }
 
 @media screen and (min-width: 1500px) {
