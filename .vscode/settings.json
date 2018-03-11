@@ -1,0 +1,7 @@
+{
+    // If it is true live server will start without browser opened.
+    "liveServer.settings.NoBrowser": true,
+
+    // Set Custom Port Number of Live Server. Set 0 if you want random port.
+    "liveServer.settings.port": 8000
+}
