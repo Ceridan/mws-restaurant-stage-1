@@ -84,7 +84,6 @@
   letter-spacing: 10px;
   margin: 10px 0 0 0;
   padding: 2px 0;
-  text-align: center;
   text-transform: uppercase;
 }
 
@@ -102,7 +101,7 @@
   padding-top: 20px;
 }
 
-#reviews-container h2 {
+#reviews-container h3 {
   color: #f58500;
   font-size: 24pt;
   font-weight: 300;
@@ -144,6 +143,7 @@
 @media screen and (max-width: 650px) {
   #restaurant-name {
     white-space: normal;
+    text-align: center;
   }
 }
 
