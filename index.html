@@ -14,22 +14,22 @@
 <body>
   <header>
     <nav class="container">
-      <a id="hamburger-menu">
+      <a id="hamburger-menu" class="modal-toggle" role="button" aria-label="Restaurant filter menu (modal dialog)" tabindex="2">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
         </svg>
       </a>
-      <h1><a href="/">Restaurant Reviews</a></h1>
+      <h1><a href="/" tabindex="1">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
-  <main id="maincontent">
+  <main id="maincontent" class="modal-overlay">
     <section id="map-container" aria-hidden="true">
       <div id="map"></div>
     </section>
 
     <section>
-      <div class="filter-options">
+      <div class="filter-options modal-drawer">
         <h2>Filter restaurants</h2>
         <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label="Filter restaurants by neighborhoods">
           <option value="all">All Neighborhoods</option>
@@ -38,14 +38,14 @@
           <option value="all">All Cuisines</option>
         </select>
       </div>
-      <ul id="restaurants-list" class="container"></ul>
+      <ul id="restaurants-list" class="container" aria-live="polite" aria-relevant="Filter was applied to restaurants list"></ul>
     </section>
   </main>
 
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/htmlelementbuilder.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/hamburgermenu.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/modaldrawer.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap"></script>
 
 
