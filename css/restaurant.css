@@ -243,18 +243,3 @@
     font-size: 14pt;
   }
 }
-
-/* TODO: Test on a very big screen and decide to keep or throw away fixed width on 1600px */
-
-/* @media screen and (min-width: 1600px) {
-  body {
-    width: 1600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .inside header,
-  .inside #breadcrumb {
-    width: 1600px;
-  }
-} */
