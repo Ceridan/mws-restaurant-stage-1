@@ -150,6 +150,10 @@
     white-space: normal;
     text-align: center;
   }
+
+  #restaurant-cuisine {
+    margin-bottom: 20px;
+  }
 }
 
 @media screen and (min-width: 500px) and (max-width: 650px) {

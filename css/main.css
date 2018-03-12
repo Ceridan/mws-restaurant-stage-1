@@ -1,14 +1,8 @@
 @charset "utf-8";
 
 header {
-  position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
-}
-
-main {
-  padding-top: 80px;
 }
 
 /* ====================== Restaurant Filtering ====================== */
@@ -141,7 +135,8 @@ main {
     width: 221px;
     height: 100%;
     position: absolute;
-    top: 80px;
+    z-index: 10;
+    top: 0;
     /* This trasform moves the drawer off canvas. */
     -webkit-transform: translate(-300px, 0);
     transform: translate(-300px, 0);
