@@ -24,6 +24,12 @@ li {
 	color: #333;
 }
 
+a,
+button,
+select {
+  cursor: pointer;
+}
+
 a {
 	color: orange;
 	text-decoration: none;

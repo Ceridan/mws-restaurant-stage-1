@@ -16,18 +16,12 @@ modalToggle.addEventListener('click', function(e) {
   e.stopPropagation();
 });
 
-modalToggle.addEventListener('keydown', function(e) {
-  if (e.keyCode === KB_SPACE || e.keyCode === KB_ENTER) {
-    openModal();
-    e.preventDefault();
-  }
-});
-
 function openModal() {
   // Save current focus
   focusedElementBeforeModal = document.activeElement;
 
   modal.classList.toggle('open');
+  modalOverlay.classList.toggle('open');
 
   // Listen for and trap the keyboard
   modal.addEventListener('keydown', trapTabKey);
@@ -35,17 +29,25 @@ function openModal() {
     e.stopPropagation();
   });
 
+
   // Listen for indicators to close the modal
   modalOverlay.addEventListener('click', closeModal);
-  // Sign-Up button
-  // var signUpBtn = modal.querySelector('#signup');
-  // signUpBtn.addEventListener('click', closeModal);
+
+  var modalCloseButton = document.querySelector('.modal-close');
+  modalCloseButton.addEventListener('click', closeModal);
 
   // Find all focusable children
-  var focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+  var focusableElementsString = 'a[role="button"], a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
   var focusableElements = modal.querySelectorAll(focusableElementsString);
   // Convert NodeList to Array
   focusableElements = Array.prototype.slice.call(focusableElements);
+
+  Array.prototype.sort.call(focusableElements, function(el1, el2) {
+    tabindex1 = parseInt(el1.getAttribute('tabindex')) || 9999;
+    tabindex2 = parseInt(el2.getAttribute('tabindex')) || 9999;
+
+    return tabindex1 - tabindex2;
+  });
 
   var firstTabStop = focusableElements[0];
   var lastTabStop = focusableElements[focusableElements.length - 1];
@@ -83,6 +85,7 @@ function openModal() {
 function closeModal() {
   // Hide the modal
   modal.classList.remove('open');
+  modalOverlay.classList.remove('open');
 
   // Set focus back to element that had it before the modal was opened
   focusedElementBeforeModal.focus();

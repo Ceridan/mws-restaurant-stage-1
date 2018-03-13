@@ -14,27 +14,36 @@
 <body>
   <header>
     <nav class="container">
-      <a id="hamburger-menu" class="modal-toggle" role="button" aria-label="Restaurant filter menu (modal dialog)" tabindex="2">
+      <button id="hamburger-menu" class="modal-toggle" aria-controls="restaurant-filter" aria-label="Restaurant filter menu (modal dialog)" tabindex="2">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
         </svg>
-      </a>
+      </button>
       <h1><a href="/" tabindex="1">Restaurant Reviews</a></h1>
     </nav>
+    <div class="modal-overlay">
+    </div>
   </header>
 
-  <main id="maincontent" class="modal-overlay">
+  <main id="maincontent">
     <section id="map-container" aria-hidden="true">
       <div id="map"></div>
     </section>
 
-    <section>
+    <section id="restaurant-filter">
       <div class="filter-options modal-drawer">
-        <h2>Filter restaurants</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label="Filter restaurants by neighborhoods">
+        <div class="filter-options-header">
+          <h2>Filter restaurants</h2>
+          <button id="hamburger-menu-close" class="modal-close" aria-label="Close filter menu (modal dialog)" tabindex="5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M 8 8 L 16 16 M 16 8 L 8 16"/>
+            </svg>
+          </button>
+        </div>
+        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label="Filter restaurants by neighborhoods" tabindex="3">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-label="Filter restaurants by cuisines">
+        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-label="Filter restaurants by cuisines" tabindex="4">
           <option value="all">All Cuisines</option>
         </select>
       </div>

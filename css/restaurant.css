@@ -22,7 +22,7 @@
 
 /* Add a slash symbol (/) before/behind each list item */
 #breadcrumb li+li:before {
-    padding: 8px;
+    padding: 10px;
     color: black;
     content: "/\00a0";
 }
