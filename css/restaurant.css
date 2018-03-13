@@ -5,7 +5,7 @@
 #breadcrumb {
   padding: 10px 0 16px;
   list-style: none;
-  background-color: #eee;
+  background-color: #f5e2bf;
   font-size: 17px;
   margin: 0;
   width: 100%;
@@ -29,7 +29,7 @@
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #0275d8;
+    color: #025fb1;
     text-decoration: none;
 }
 
@@ -49,14 +49,16 @@
 }
 
 #restaurant-name {
-  color: #f18200;
+  /* color: #f18200; */
+  background-color: #333;
+  color: #ddd;
   font-family: Arial,sans-serif;
-  font-size: 20pt;
+  font-size: 18pt;
   font-weight: 200;
-  letter-spacing: 0;
+  letter-spacing: 1px;
   margin: 15px 0 15px;
   text-transform: uppercase;
-  line-height: 1.1;
+  line-height: 2;
   text-align: center;
   white-space: nowrap;
 }
@@ -107,10 +109,12 @@
 }
 
 #reviews-container h3 {
-  color: #f58500;
-  font-size: 24pt;
+  /* color: #f58500; */
+  background-color: #333;
+  color: #ddd;
+  font-size: 20pt;
   font-weight: 300;
-  letter-spacing: -1px;
+  letter-spacing: 1px;
   padding-left: 5px;
   padding-bottom: 0.1pt;
 }
