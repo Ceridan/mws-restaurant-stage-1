@@ -89,7 +89,7 @@ header {
   background-color: orange;
   border-bottom: 3px solid #eee;
   color: #fff;
-  display: inline-block;
+  display: block;
   font-size: 10pt;
   margin: 15px 0 0;
   padding: 8px 30px 10px;
@@ -286,6 +286,10 @@ header {
     min-height: 250px;
     height: 250px;
     padding: 10px 15px;
+  }
+
+  #restaurants-list li a {
+    margin: 50px 10px 0 0;
   }
 
   #restaurants-list .restaurant-img {

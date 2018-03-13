@@ -13,6 +13,7 @@ class HtmlElementBuilder {
     const image = existingImage || document.createElement('img');
     image.src = imageUrl800;
     image.className = 'restaurant-img';
+    image.alt = '';
     picture.append(image);
 
     return picture;
