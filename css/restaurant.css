@@ -127,7 +127,7 @@
 
 #reviews-list li {
   background-color: #fff;
-  border: 2px solid #f3f3f3;
+  border: 2px solid #333;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
   display: block;
