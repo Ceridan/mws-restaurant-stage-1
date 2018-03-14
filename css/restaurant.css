@@ -57,10 +57,10 @@
   font-weight: 200;
   letter-spacing: 1px;
   margin: 15px 0 15px;
+  padding: 0 10px;
   text-transform: uppercase;
-  line-height: 2;
+  line-height: 1.5;
   text-align: center;
-  white-space: nowrap;
 }
 
 #restaurant-img {
@@ -115,7 +115,7 @@
   font-size: 20pt;
   font-weight: 300;
   letter-spacing: 1px;
-  padding-left: 5px;
+  padding-left: 20px;
   padding-bottom: 0.1pt;
 }
 
@@ -128,16 +128,52 @@
 #reviews-list li {
   background-color: #fff;
   border: 2px solid #f3f3f3;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   display: block;
   list-style-type: none;
   margin: 0 0 30px;
   overflow: hidden;
-  padding: 0 20px 20px;
+  padding: 0;
   position: relative;
 }
 
-#reviews-list li p {
-  margin: 0 0 10px;
+#reviews-list li div p {
+  margin: 10px 0 10px;
+  font-size: 12pt;
+}
+
+#reviews-list li div.review-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #333;
+  padding: 0 20px;
+}
+
+#reviews-list li div.review-header p {
+  color: #fff;
+}
+
+#reviews-list li div.review-content {
+  font-size: 12pt;
+  padding: 0 20px;
+}
+
+#reviews-list li div.review-header p.review-name {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+#reviews-list li div.review-content p.review-rating {
+  background-color: orange;
+  font-weight: bold;
+  width: 80px;
+  padding: 10px;
+  margin: 20px 0;
+}
+
+#reviews-list li div.review-content p.review-comment {
+  padding-bottom: 10px;
 }
 
 #restaurant-hours td {
@@ -193,7 +229,7 @@
 
   .restaurant-address-schedule {
     width: calc(40% - 5px);
-    padding: 44px 0 10px;
+    padding: 10px 0 10px;
   }
 }
 
@@ -203,7 +239,7 @@
   }
 
   #reviews-list li {
-    width: calc(50% - 60px);
+    width: calc(50% - 30px);
   }
 }
 
@@ -226,7 +262,7 @@
 
   #map-container {
     width: calc(50% - 20px);
-    padding: 194px 20px 30px 0;
+    padding: 150px 20px 30px 0;
   }
 
   #map {
@@ -238,7 +274,7 @@
   }
 }
 
-@media screen and (min-width: 1400px) {
+@media screen and (min-width: 1600px) {
   #restaurant-address {
     font-size: 16pt;
   }
