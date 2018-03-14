@@ -142,6 +142,8 @@ const createReviewHTML = (review) => {
   // rating.innerHTML = `Rating: ${review.rating}`;
   rating.innerHTML = `Rating: ${'★'.repeat(review.rating)}`;
   rating.className = 'review-rating';
+  rating.setAttribute('role', 'img');
+  rating.setAttribute('aria-label', `Rating: ${review.rating}`);
   divReviewContent.appendChild(rating);
 
   const comments = document.createElement('p');
