@@ -165,11 +165,9 @@
 }
 
 #reviews-list li div.review-content p.review-rating {
-  background-color: orange;
+  color: #DB3A00;
   font-weight: bold;
-  width: 80px;
-  padding: 10px;
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 #reviews-list li div.review-content p.review-comment {

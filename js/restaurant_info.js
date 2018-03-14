@@ -139,7 +139,8 @@ const createReviewHTML = (review) => {
   divReviewContent.className = 'review-content';
 
   const rating = document.createElement('p');
-  rating.innerHTML = `Rating: ${review.rating}`;
+  // rating.innerHTML = `Rating: ${review.rating}`;
+  rating.innerHTML = `Rating: ${'★'.repeat(review.rating)}`;
   rating.className = 'review-rating';
   divReviewContent.appendChild(rating);
 
