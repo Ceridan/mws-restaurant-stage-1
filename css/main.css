@@ -53,8 +53,6 @@ header {
 #restaurants-list li {
   background-color: #fff;
   border: 2px solid #ccc;
-  border-top-left-radius: 20px;
-  border-bottom-right-radius: 20px;
   font-family: Arial,sans-serif;
   margin: 15px;
   min-height: 380px;
@@ -71,7 +69,6 @@ header {
   max-width: 100%;
   min-height: 248px;
   min-width: 100%;
-  border-top-left-radius: 10px;
 }
 
 #restaurants-list li h2 {
@@ -178,6 +175,7 @@ header {
 @media screen and (max-width: 380px) {
   #restaurants-list .restaurant-img {
     min-height: 150px;
+    min-width: 200px;
   }
 
   nav h1 a {

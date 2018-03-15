@@ -149,8 +149,9 @@ class DBHelper {
   /**
    * Restaurant image URL.
    */
-  static imageUrlForRestaurant(restaurant, size = 800) {
-    return (`/img/${size}/${restaurant.photograph}`);
+  static imageUrlForRestaurant(restaurant, size = 800, isCompressed = false) {
+    const compressedSuffix = isCompressed ? '-compressed' : '';
+    return (`/img/${size}${compressedSuffix}/${restaurant.photograph}`);
   }
 
   /**
