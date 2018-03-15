@@ -102,6 +102,8 @@
 
 #restaurant-container {
   padding: 140px 0 30px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 #reviews-container {
@@ -183,28 +185,8 @@
 }
 
 /* ====================== Layout changes depends on screen width ====================== */
-@media screen and (max-width: 650px) {
-  #restaurant-name {
-    white-space: normal;
-    text-align: center;
-  }
 
-  #restaurant-cuisine {
-    margin-bottom: 20px;
-  }
-}
-
-@media screen and (min-width: 500px) and (max-width: 650px) {
-  #restaurant-address {
-    font-size: 14pt;
-  }
-
-  #restaurant-hours td {
-    font-size: 12pt;
-  }
-}
-
-@media screen and (min-width: 651px) {
+@media screen and (min-width: 550px) {
   .container {
     justify-content: space-between;
   }
@@ -231,7 +213,7 @@
   }
 }
 
-@media screen and (min-width: 651px) and (max-width: 1199px) {
+@media screen and (min-width: 650px) and (max-width: 1199px) {
   #restaurant-hours td {
     font-size: 12pt;
   }
@@ -241,7 +223,7 @@
   }
 }
 
-@media screen and (min-width: 751px) and (max-width: 1199px) {
+@media screen and (min-width: 750px) and (max-width: 1199px) {
   #restaurant-address {
     font-size: 16pt;
   }

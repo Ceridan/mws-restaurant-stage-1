@@ -60,6 +60,7 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   // image.className = 'restaurant-img';
   // image.src = DBHelper.imageUrlForRestaurant(restaurant);
   HtmlElementBuilder.createPictureElement(restaurant, picture, image);
+  image.sizes = '50vw';
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
