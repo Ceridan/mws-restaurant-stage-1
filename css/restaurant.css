@@ -106,6 +106,10 @@
   margin-left: auto;
 }
 
+#restaurant-hours td {
+  padding-right: 5px;
+}
+
 #reviews-container {
   padding-top: 20px;
 }

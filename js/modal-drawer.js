@@ -80,16 +80,15 @@ function openModal() {
       closeModal();
     }
   }
-}
 
-function closeModal() {
-  // Hide the modal
-  modal.classList.remove('open');
-  modalOverlay.classList.remove('open');
+  function closeModal() {
+    // Hide the modal
+    modal.classList.remove('open');
+    modalOverlay.classList.remove('open');
 
-  modal.removeEventListener('keydown');
-  modal.removeEventListener('click');
+    modal.removeEventListener('keydown', trapTabKey);
 
-  // Set focus back to element that had it before the modal was opened
-  focusedElementBeforeModal.focus();
+    // Set focus back to element that had it before the modal was opened
+    focusedElementBeforeModal.focus();
+  }
 }
