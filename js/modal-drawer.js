@@ -87,6 +87,9 @@ function closeModal() {
   modal.classList.remove('open');
   modalOverlay.classList.remove('open');
 
+  modal.removeEventListener('keydown');
+  modal.removeEventListener('click');
+
   // Set focus back to element that had it before the modal was opened
   focusedElementBeforeModal.focus();
 }
