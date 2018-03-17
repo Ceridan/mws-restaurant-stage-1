@@ -1,4 +1,13 @@
+/**
+ * HtmlElementBuildal class is a kind of helper class allows to create DOM-elements on the fly
+ */
 class HtmlElementBuilder {
+  /**
+   * @param {any} restaurant - object contains information about restaurant
+   * @param {HTMLElement} existingPicture - picture tag if already exists in html markup
+   * @param {HTMLElement} existingImage - image tah inside picture tag if alreadt exists in html markup
+   * @returns {HTMLElement} - filled picture tag. If existingPicture parameter is passed and it is not empty, then fill and return it
+   */
   static createPictureElement(restaurant, existingPicture, existingImage) {
     const imageUrl400 = DBHelper.imageUrlForRestaurant(restaurant, 400);
     const imageUrl800 = DBHelper.imageUrlForRestaurant(restaurant, 800);
@@ -6,22 +15,14 @@ class HtmlElementBuilder {
 
     const picture = existingPicture || document.createElement('picture');
 
-    // const source400 = document.createElement('source');
-    // source400.media = '(max-width: 400px)';
-    // source400.srcset = `${imageUrl400} 1x, ${imageUrl800Compressed} 2x`;
-    // picture.append(source400);
-
-    // const source800 = document.createElement('source');
-    // source800.media = '(max-width: 800px)';
-    // source800.srcset = `${imageUrl800Compressed} 1x, ${imageUrl800} 2x`;
-    // picture.append(source800);
-
+    // First source considered to be used with small screens with singl column layouts
     const source400 = document.createElement('source');
     source400.media = '(max-width: 460px)';
     source400.sizes = '90vw';
     source400.srcset = `${imageUrl400} 400w, ${imageUrl800Compressed} 800w`;
     picture.append(source400);
 
+    // In other cases our images will fill only 25% of the screen width
     const image = existingImage || document.createElement('img');
     image.src = imageUrl800;
     image.sizes = '25vw';

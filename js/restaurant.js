@@ -1,5 +1,8 @@
+// Variable to store restaurant object
 let restaurant;
-var map;
+
+// Variable to work with map
+let map;
 
 /**
  * Initialize Google map, called from HTML.
@@ -57,8 +60,11 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const picture = document.getElementById('restaurant-picture');
   const image = document.getElementById('restaurant-img');
-  // image.className = 'restaurant-img';
-  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
+
+  // For images we pass existing picture and image tag
+  // to HtmlElementBuilder.createPictureElement to fill with specific sources
+  // Picture tag allows to provide different options for browser
+  // and it can choose the appropriate image to download
   HtmlElementBuilder.createPictureElement(restaurant, picture, image);
   image.sizes = '50vw';
 
@@ -136,22 +142,28 @@ const createReviewHTML = (review) => {
 
   li.appendChild(divReviewHeader);
 
-  const divReviewContent = document.createElement('div');
-  divReviewContent.className = 'review-content';
+  // Create article element instead of div for correct semantics
+  const articleReviewContent = document.createElement('article');
+  articleReviewContent.className = 'review-content';
 
+  // Here is some maybe not very fair trick. I want to show review rating using star symbols.
+  // So, if it has rating of 4 it could be shown as ★★★★. It looks nice, but it is bad
+  // from the accessibility point of view, because screen reader couldn't read it correctly.
+  // So trick is to give an image role to paragraph element and set aria-label attribute
+  // for it which will contain rating number as is.
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${'★'.repeat(review.rating)}`;
   rating.className = 'review-rating';
   rating.setAttribute('role', 'img');
   rating.setAttribute('aria-label', `Rating: ${review.rating}`);
-  divReviewContent.appendChild(rating);
+  articleReviewContent.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
   comments.className = 'review-comment';
-  divReviewContent.appendChild(comments);
+  articleReviewContent.appendChild(comments);
 
-  li.appendChild(divReviewContent);
+  li.appendChild(articleReviewContent);
 
   return li;
 };

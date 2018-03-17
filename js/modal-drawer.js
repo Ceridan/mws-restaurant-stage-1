@@ -1,25 +1,33 @@
+/**
+* Modal drawer code to implement open/close behaviour of drawer and also to trap the tabs inside drawer
+*/
+
+// Keyboard codes of tab, space, enter and escape buttons
 const KB_TAB = 9;
 const KB_SPACE = 32;
 const KB_ENTER = 13;
 const KB_ESCAPE = 27;
 
 // Will hold previously focused element
-var focusedElementBeforeModal;
+let focusedElementBeforeModal;
 
-// Find the modal and its overlay
-var modal = document.querySelector('.modal-drawer');
-var modalOverlay = document.querySelector('.modal-overlay');
+// Find the modal drawer and its overlay
+const modal = document.querySelector('.modal-drawer');
+const modalOverlay = document.querySelector('.modal-overlay');
 
-var modalToggle = document.querySelector('.modal-toggle');
+// Find element which opens the modal drawer
+const modalToggle = document.querySelector('.modal-toggle');
 modalToggle.addEventListener('click', function(e) {
   openModal();
   e.stopPropagation();
 });
 
+// Open modal drawer
 function openModal() {
   // Save current focus
   focusedElementBeforeModal = document.activeElement;
 
+  // Show modal drawer and overlay
   modal.classList.toggle('open');
   modalOverlay.classList.toggle('open');
 
@@ -29,19 +37,21 @@ function openModal() {
     e.stopPropagation();
   });
 
-
   // Listen for indicators to close the modal
   modalOverlay.addEventListener('click', closeModal);
 
-  var modalCloseButton = document.querySelector('.modal-close');
+  // Find element which clothes the modal drawer
+  const modalCloseButton = document.querySelector('.modal-close');
   modalCloseButton.addEventListener('click', closeModal);
 
   // Find all focusable children
-  var focusableElementsString = 'a[role="button"], a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
-  var focusableElements = modal.querySelectorAll(focusableElementsString);
+  const focusableElementsString = 'a[role="button"], a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+  let focusableElements = modal.querySelectorAll(focusableElementsString);
+
   // Convert NodeList to Array
   focusableElements = Array.prototype.slice.call(focusableElements);
 
+  // Sort elements order by tab indexes
   Array.prototype.sort.call(focusableElements, function(el1, el2) {
     tabindex1 = parseInt(el1.getAttribute('tabindex')) || 9999;
     tabindex2 = parseInt(el2.getAttribute('tabindex')) || 9999;
@@ -49,12 +59,13 @@ function openModal() {
     return tabindex1 - tabindex2;
   });
 
-  var firstTabStop = focusableElements[0];
-  var lastTabStop = focusableElements[focusableElements.length - 1];
+  const firstTabStop = focusableElements[0];
+  const lastTabStop = focusableElements[focusableElements.length - 1];
 
   // Focus first child
   firstTabStop.focus();
 
+  // Catch tab key and trap it inside modal drawer
   function trapTabKey(e) {
     // Check for TAB key press
     if (e.keyCode === KB_TAB) {
@@ -81,11 +92,13 @@ function openModal() {
     }
   }
 
+  // Close modal drawer and hide overlay
   function closeModal() {
-    // Hide the modal
+    // Hide the modal drawer and overlay
     modal.classList.remove('open');
     modalOverlay.classList.remove('open');
 
+    // Remove keydown event listener to remove trap on tabs
     modal.removeEventListener('keydown', trapTabKey);
 
     // Set focus back to element that had it before the modal was opened

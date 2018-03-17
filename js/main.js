@@ -1,21 +1,25 @@
+// Variables to store information about restaurants
 let restaurants,
   neighborhoods,
   cuisines;
 
-var map;
-var markers = [];
+// Variables to work with map and markers on it
+let map;
+let markers = [];
+
+/**
+ * Register service worker on load event
+ */
+window.addEventListener('load', () => {
+  registerServiceWorker();
+});
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
-
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
-});
-
-window.addEventListener('load', () => {
-  registerServiceWorker();
 });
 
 
@@ -145,6 +149,9 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
 const createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
+  // For images create picture tags using HtmlElementBuilder.
+  // Picture tag allows to provide different options for browser
+  // and it can choose the appropriate image to download
   const picture = HtmlElementBuilder.createPictureElement(restaurant);
   li.append(picture);
 
@@ -154,6 +161,7 @@ const createRestaurantHTML = (restaurant) => {
   name.innerHTML = restaurant.name;
   div.append(name);
 
+  // Create address element instead of div for correct semantics
   const address = document.createElement('address');
 
   const neighborhood = document.createElement('p');
@@ -169,6 +177,9 @@ const createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
+
+  // Add aria-label to give more information to screen readers,
+  // because 'View Details' says little about real purpose of the link
   more.setAttribute('aria-label', `${restaurant.name} restaurant details`);
   div.append(more);
 

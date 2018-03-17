@@ -1,7 +1,15 @@
 @charset "utf-8";
+/* ====================== Header ====================== */
+/* Sticky header in the top of the screen */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
 
 /* ====================== Navigation breadcrumbs ====================== */
-
 #breadcrumb {
   padding: 10px 0 16px;
   list-style: none;
@@ -40,16 +48,8 @@
 }
 
 
-/* ====================== Restaurant Details ====================== */
-.inside header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
+/* ====================== Restaurant details ====================== */
 #restaurant-name {
-  /* color: #f18200; */
   background-color: #333;
   color: #ddd;
   font-family: Arial,sans-serif;
@@ -73,15 +73,6 @@
   margin: 10px 0px;
 }
 
-#reviews-container,
-.restaurant-main-info,
-.restaurant-address-schedule {
-  width: 90%;
-  margin-left: auto;
-	margin-right: auto;
-	display: block;
-}
-
 #restaurant-cuisine {
   background-color: #333;
   color: #ddd;
@@ -94,28 +85,46 @@
   text-align: center;
 }
 
-#restaurant-container,
-#reviews-container,
-#map-container {
-  border-bottom: 1px solid #d9d9d9;
-}
-
 #restaurant-container {
+  border-bottom: 1px solid #d9d9d9;
   padding: 140px 0 30px;
   margin-right: auto;
   margin-left: auto;
 }
 
 #restaurant-hours td {
+  color: #666;
   padding-right: 5px;
 }
 
+.restaurant-main-info,
+.restaurant-address-schedule {
+  width: 90%;
+  margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+
+/* ====================== Map ====================== */
+#map-container {
+  border-bottom: 1px solid #d9d9d9;
+  width: 100%;
+}
+
+
+/* ====================== Reviews ====================== */
+
 #reviews-container {
+  width: 90%;
+  margin-left: auto;
+	margin-right: auto;
+  display: block;
+  border-bottom: 1px solid #d9d9d9;
   padding-top: 20px;
 }
 
 #reviews-container h3 {
-  /* color: #f58500; */
   background-color: #333;
   color: #ddd;
   font-size: 20pt;
@@ -144,7 +153,8 @@
   position: relative;
 }
 
-#reviews-list li div p {
+#reviews-list li div p,
+#reviews-list li article p {
   margin: 10px 0 10px;
   font-size: 12pt;
 }
@@ -160,36 +170,31 @@
   color: #fff;
 }
 
-#reviews-list li div.review-content {
-  font-size: 12pt;
-  padding: 0 20px;
-}
-
 #reviews-list li div.review-header p.review-name {
   font-size: 14pt;
   font-weight: bold;
 }
 
-#reviews-list li div.review-content p.review-rating {
+#reviews-list li article.review-content {
+  font-size: 12pt;
+  padding: 0 20px;
+}
+
+#reviews-list li article.review-content p.review-rating {
   color: #DB3A00;
   font-weight: bold;
   margin: 15px 0;
 }
 
-#reviews-list li div.review-content p.review-comment {
+#reviews-list li article.review-content p.review-comment {
   padding-bottom: 10px;
 }
 
-#restaurant-hours td {
-  color: #666;
-}
-
-#map-container {
-  width: 100%;
-}
 
 /* ====================== Layout changes depends on screen width ====================== */
+/* Default layout considered to use on small screen sizes and use single column layout for all the elements. */
 
+/* Medium screens use two-column layout for restaurant details */
 @media screen and (min-width: 550px) {
   .container {
     justify-content: space-between;
@@ -217,6 +222,7 @@
   }
 }
 
+/* For larger screens reviews section also split into two columns */
 @media screen and (min-width: 650px) and (max-width: 1199px) {
   #restaurant-hours td {
     font-size: 12pt;
@@ -227,6 +233,7 @@
   }
 }
 
+/* For larger screens also we have to adjust restaurant address fonts to fill the empty space in the second column of restaurant details */
 @media screen and (min-width: 750px) and (max-width: 1199px) {
   #restaurant-address {
     font-size: 16pt;
@@ -237,6 +244,7 @@
   }
 }
 
+/* Large screen layout splits into the three columns. Image, address and map fill three columns in restaurant details. */
 @media screen and (min-width: 1200px) {
   #restaurant-container {
     width: 50%;
@@ -258,6 +266,7 @@
   }
 }
 
+/* Adjust fonts for large screens */
 @media screen and (min-width: 1600px) {
   #restaurant-address {
     font-size: 16pt;
