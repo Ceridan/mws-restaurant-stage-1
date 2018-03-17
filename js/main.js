@@ -4,8 +4,8 @@ let restaurants,
   cuisines;
 
 // Variables to work with map and markers on it
-let map;
-let markers = [];
+var map;
+var markers = [];
 
 /**
  * Register service worker on load event

@@ -1,8 +1,8 @@
 // Variable to store restaurant object
-let restaurant;
+var restaurant;
 
 // Variable to work with map
-let map;
+var map;
 
 /**
  * Initialize Google map, called from HTML.
