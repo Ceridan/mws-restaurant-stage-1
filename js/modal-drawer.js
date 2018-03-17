@@ -31,6 +31,9 @@ function openModal() {
   modal.classList.toggle('open');
   modalOverlay.classList.toggle('open');
 
+  // Add animation to modal drawer open/close operations
+  modal.classList.toggle('modal-animation');
+
   // Listen for and trap the keyboard
   modal.addEventListener('keydown', trapTabKey);
   modal.addEventListener('click', function(e) {

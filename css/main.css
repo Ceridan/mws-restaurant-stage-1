@@ -166,6 +166,11 @@ header {
   padding: 0;
 }
 
+.modal-animation {
+  -webkit-transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
 /* ====================== Layout changes depends on screen width ====================== */
 /* Default layout contains map in the top of the page followed by filter options section
 and than restaurant list items section. Restaurant list items fill the page row by row.*/
@@ -205,9 +210,8 @@ and than restaurant list items section. Restaurant list items fill the page row 
 
   .filter-options.open {
     display: block;
+    -webkit-transform: translate(0, 0);
     transform: translate(0, 0);
-    -webkit-transition: transform 0.3s ease;
-    transition: transform 0.3s ease;
   }
 
   .filter-options-header {
@@ -278,6 +282,10 @@ and than restaurant list items section. Restaurant list items fill the page row 
 
   .filter-options select {
     margin-top: 0;
+  }
+
+  .modal-animation {
+    transition: none;
   }
 }
 
