@@ -66,6 +66,9 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   // Picture tag allows to provide different options for browser
   // and it can choose the appropriate image to download
   HtmlElementBuilder.createPictureElement(restaurant, picture, image);
+  // Fix the result of HtmlElementBuilder.createPictureElement
+  // because in restaurant details page image can fill up to 50% of the screen
+  // on big screen sizes
   image.sizes = '50vw';
 
   const cuisine = document.getElementById('restaurant-cuisine');
