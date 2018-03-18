@@ -1,5 +1,5 @@
 # Mobile Web Specialist Certification Course
-This repository forked from: `https://github.com/udacity/mws-restaurant-stage-1`
+This repository forked from: https://github.com/udacity/mws-restaurant-stage-1
 
 Here is my implementation of the **Restaurant Review project (stage 1)** as a part of [Mobile Web Specialist Nanodegree](https://www.udacity.com/course/mobile-web-specialist-nanodegree--nd024) from the [Udacity](https://www.udacity.com).
 
