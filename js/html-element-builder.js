@@ -28,9 +28,8 @@ class HtmlElementBuilder {
     image.sizes = '25vw';
     image.srcset = `${imageUrl400} 400w, ${imageUrl800Compressed} 800w, ${imageUrl800} 1600w`;
     image.className = 'restaurant-img';
-    // Set alt attribute for accesibility purpose. Here I set alt="" to hide images from the screen readers
-    // because the images is not very informative and I decide to tottaly hide it.
-    image.alt = '';
+    // Set alt attribute for accesibility purpose. The photo os not very descriptive, so I will provide restaurant name and cuisine for the screen readers.
+    image.alt = `${restaurant.name} restaurant. Cuisine type is ${restaurant.cuisine_type}`;
     picture.append(image);
 
     return picture;
