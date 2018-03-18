@@ -1,5 +1,14 @@
 # Mobile Web Specialist Certification Course
+This repository forked from: `https://github.com/udacity/mws-restaurant-stage-1`
+
+Here is my implementation of the **Restaurant Review project (stage 1)** as a part of [Mobile Web Specialist Nanodegree](https://www.udacity.com/course/mobile-web-specialist-nanodegree--nd024) from the [Udacity](https://www.udacity.com).
+
+If you want to run it look at original instructions below. Additionaly, you should provide your own [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) to the scripts section of the **index.html** and **restaurant.html** files. Find and replace this text `YOUR_GOOGLE_MAPS_API_KEY` with your key and you are done.
+
 ---
+## Initial instructions from the original repository
+---
+
 #### _Three Stage Course Material Project - Restaurant Reviews_
 
 ## Project Overview: Stage 1
