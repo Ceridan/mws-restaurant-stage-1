@@ -50,7 +50,6 @@ header {
   list-style: outside none none;
   margin: 0;
   padding: 30px 15px 60px;
-  text-align: center;
 }
 
 #restaurants-list li {
@@ -63,6 +62,10 @@ header {
   text-align: left;
   width: 270px;
   position: relative;
+}
+
+#restaurants-list.container {
+  justify-content: center;
 }
 
 #restaurants-list .restaurant-img {
@@ -189,10 +192,6 @@ and than restaurant list items section. Restaurant list items fill the page row 
 
 /* For mobile devices hides the map, layout in 1 column, add hamburger menu and hide filter options with drawer */
 @media screen and (max-width: 460px) {
-  .container {
-    justify-content: center;
-  }
-
   #map-container {
     display: none;
   }
@@ -263,10 +262,6 @@ and than restaurant list items section. Restaurant list items fill the page row 
 
 /* On a bit larger screens place filter options back to the original position. Map is still hidden. */
 @media screen and (min-width: 461px) and (max-width: 650px) {
-  .container {
-    justify-content: center;
-  }
-
   #map-container {
     display: none;
   }
@@ -293,10 +288,6 @@ and than restaurant list items section. Restaurant list items fill the page row 
 /* On medium screens place filter options back to the original position. Map is still hidden.
 Show restaurant list item card in two columns to fill the empty space on the screen.*/
 @media screen and (min-width: 651px) and (max-width: 780px) {
-  .container {
-    justify-content: center;
-  }
-
   #map-container {
     display: none;
   }

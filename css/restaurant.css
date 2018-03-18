@@ -17,6 +17,7 @@ header {
   font-size: 17px;
   margin: 0;
   width: 100%;
+  text-align: left;
 }
 
 /* Display list items side by side */
