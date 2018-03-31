@@ -11,20 +11,68 @@ class DBHelper {
     return `http://localhost:${port}`;
   }
 
+  static get IDB() {
+    return idb.open('restaurant-db', 1, upgradeDb => {
+      upgradeDb.createObjectStore('restaurant', { keyPath: 'id' });
+    });
+  }
+
+  static getRestaurantsFromIdb() {
+    return DBHelper.IDB.then(db => {
+      const store = db.transaction('restaurant').objectStore('restaurant');
+      return store.getAll();
+    }).then(restaurants => {
+      if (restaurants && restaurants.length > 0)
+        return Promise.resolve(restaurants);
+      else
+        return Promise.reject();
+    });
+  }
+
+  static getRestaurantFromIdbById(id) {
+    return DBHelper.IDB.then(db => {
+      const store = db.transaction('restaurant').objectStore('restaurant');
+      return store.get(parseInt(id));
+    }).then(restaurant => {
+      if (restaurant)
+        return Promise.resolve(restaurant);
+      else
+        return Promise.reject();
+    });
+  }
+
+  static storeRestaurantsToIdb(restaurants) {
+    DBHelper.IDB.then(db => {
+      const transaction = db.transaction('restaurant', 'readwrite');
+      const store = transaction.objectStore('restaurant');
+
+      restaurants.forEach(restaurant => {
+        store.put(restaurant);
+      });
+
+      return transaction.complete;
+    });
+  }
+
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
     const restaurantsUrl = `${DBHelper.SERVER_URL}/restaurants`;
 
-    fetch(restaurantsUrl)
-      .then(response => response.json())
-      .then(jsonData => {
-        callback(null, jsonData);
-      })
-      .catch(err => {
-        callback(`Request failed. Error: ${err}`, null);
-      });
+    DBHelper.getRestaurantsFromIdb().then(restaurants => {
+      callback(null, restaurants);
+    }).catch(() => {
+      fetch(restaurantsUrl)
+        .then(response => response.json())
+        .then(jsonData => {
+          DBHelper.storeRestaurantsToIdb(jsonData);
+          callback(null, jsonData);
+        })
+        .catch(err => {
+          callback(`Request failed. Error: ${err}`, null);
+        });
+    });
   }
 
   /**
@@ -33,14 +81,18 @@ class DBHelper {
   static fetchRestaurantById(id, callback) {
     const restaurantUrl = `${DBHelper.SERVER_URL}/restaurants/${id}`;
 
-    fetch(restaurantUrl)
-      .then(response => response.json())
-      .then(jsonData => {
-        callback(null, jsonData);
-      })
-      .catch(err => {
-        callback(`Request failed. Error: ${err}`, null);
-      });
+    DBHelper.getRestaurantFromIdbById(id).then(restaurant => {
+      callback(null, restaurant);
+    }).catch(() => {
+      fetch(restaurantUrl)
+        .then(response => response.json())
+        .then(jsonData => {
+          callback(null, jsonData);
+        })
+        .catch(err => {
+          callback(`Request failed. Error: ${err}`, null);
+        });
+    });
   }
 
   /**
