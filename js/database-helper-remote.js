@@ -196,7 +196,7 @@ class DBHelper {
    */
   static imageUrlForRestaurant(restaurant, size = 800, isCompressed = false) {
     const compressedSuffix = isCompressed ? '-compressed' : '';
-    return (`/img/${size}${compressedSuffix}/${restaurant.photograph}.jpg`);
+    return (`/img/${size}${compressedSuffix}/${restaurant.photograph || restaurant.id}.jpg`);
   }
 
   /**
