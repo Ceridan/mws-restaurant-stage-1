@@ -1,11 +1,11 @@
 // Keep a cache name as a global scope constant, to be able to change it
 // when we have to add major changes to caching strategy
-const cacheName = 'restaurant-review-v1';
+const staticCacheName = 'restaurant-review-v2';
 
 // Fetch and add to the cache our html and css files
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(cacheName).then(cache => {
+    caches.open(staticCacheName).then(cache => {
       return cache.addAll([
         '/index.html',
         '/restaurant.html',
@@ -13,6 +13,22 @@ self.addEventListener('install', event => {
         '/css/main.css',
         '/css/restaurant.css'
       ]);
+    })
+  );
+});
+
+
+// Delete previous caches on activate event
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.filter(cacheName => {
+          return cacheName.startsWith('restaurant-review-') && cacheName != staticCacheName;
+        }).map(cacheName => {
+          return caches.delete(cacheName);
+        })
+      );
     })
   );
 });
@@ -27,7 +43,7 @@ self.addEventListener('fetch', event => {
   }
 
   event.respondWith (
-    caches.open(cacheName).then(cache => {
+    caches.open(staticCacheName).then(cache => {
       return cache.match(event.request).then(response => {
         return response || fetch(event.request).then(networkResponse => {
           cache.put(event.request, networkResponse.clone());
