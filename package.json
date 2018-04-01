@@ -1,0 +1,31 @@
+{
+  "name": "mws-restaurant-project",
+  "version": "1.0.0",
+  "description": "Graduation project of the Mobile Web Specialist nanodegree program by Udacity",
+  "main": "gulpfile.js",
+  "scripts": {
+    "build": "gulp prod:build",
+    "serve": "npm run build && gulp prod:serve",
+    "development": "gulp dev:build && gulp dev:serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ceridan/mws-restaurant-stage-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "browser-sync": "^2.23.6",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-eslint": "^4.0.2",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-uglify": "^3.0.0",
+    "run-sequence": "^2.2.1"
+  }
+}

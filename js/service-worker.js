@@ -17,7 +17,6 @@ self.addEventListener('install', event => {
   );
 });
 
-
 // Delete previous caches on activate event
 self.addEventListener('activate', event => {
   event.waitUntil(

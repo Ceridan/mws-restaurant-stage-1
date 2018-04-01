@@ -135,3 +135,6 @@ fabric.properties
 
 #API keys
 secret.json
+
+#Build
+dist/
