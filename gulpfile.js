@@ -2,10 +2,13 @@
 const fs = require('fs');
 const gulp = require('gulp');
 const concat = require('gulp-concat');
+const streamify = require('gulp-streamify');
 const uglify = require('gulp-uglify');
-const babel = require('gulp-babel');
 const htmlreplace = require('gulp-html-replace');
 const eslint = require('gulp-eslint');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
 const runSequence = require('run-sequence');
 const del = require('del');
 const browserSync = require('browser-sync').create();
@@ -55,7 +58,6 @@ gulp.task('html', done => {
 
     gulp.src('*.html')
       .pipe(htmlreplace({
-        js: '<script src="js/bundle.js"></script>',
         googlemaps: {
           src: googleMapsApiKey,
           tpl: '<script async defer src="https://maps.googleapis.com/maps/api/js?key=%s&libraries=places&callback=initMap"></script>'
@@ -73,39 +75,51 @@ gulp.task('styles', () => {
 });
 
 gulp.task('prod:scripts', () => {
-  return gulp.src(['js/**/*.js', '!js/database-helper-local.js', '!js/service-worker.js'])
-    .pipe(concat('bundle.js'))
-    .pipe(babel({
-      presets: ['env']
-    }))
-    .pipe(uglify())
-    .pipe(gulp.dest('dist/js'));
+  const bundleThis = (sources) => {
+    sources.forEach(src => {
+      browserify(['js/' + src + '.js'])
+        .transform(babelify.configure({
+          presets: ['env']
+        }))
+        .bundle()
+        .pipe(source(src + '.bundle.js'))
+        .pipe(streamify(uglify()))
+        .pipe(gulp.dest('dist/js'));
+    });
+  };
+
+  bundleThis(['main', 'restaurant']);
 });
 
 gulp.task('dev:scripts', () => {
-  return gulp.src(['js/**/*.js', '!js/database-helper-local.js', '!js/service-worker.js'])
-    .pipe(concat('bundle.js'))
-    .pipe(babel({
-      presets: ['env']
-    }))
-    .pipe(gulp.dest('dist/js'));
+  const bundleThis = (sources) => {
+    sources.forEach(src => {
+      browserify(['js/' + src + '.js'])
+        .transform(babelify.configure({
+          presets: ['env']
+        }))
+        .bundle()
+        .pipe(source(src + '.bundle.js'))
+        .pipe(gulp.dest('dist/js'));
+    });
+  };
+
+  bundleThis(['main', 'restaurant']);
 });
 
 gulp.task('prod:service-worker', () => {
-  return gulp.src('js/service-worker.js')
-    .pipe(concat('bundle.js'))
-    .pipe(babel({
+  return browserify(['js/service-worker.js'])
+    .transform(babelify.configure({
       presets: ['env']
     }))
-    .pipe(uglify())
+    .bundle()
+    .pipe(source('service-worker.js'))
+    .pipe(streamify(uglify()))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('dev:service-worker', () => {
   return gulp.src('js/service-worker.js')
-    .pipe(babel({
-      presets: ['env']
-    }))
     .pipe(gulp.dest('dist'));
 });
 
