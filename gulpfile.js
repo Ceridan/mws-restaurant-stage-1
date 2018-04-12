@@ -1,6 +1,8 @@
 /*eslint-env node */
 const fs = require('fs');
 const gulp = require('gulp');
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
 const concat = require('gulp-concat');
 const streamify = require('gulp-streamify');
 const uglify = require('gulp-uglify');
@@ -13,35 +15,38 @@ const runSequence = require('run-sequence');
 const del = require('del');
 const browserSync = require('browser-sync').create();
 
-gulp.task('prod:serve', () => {
+const buildFolder = 'dist';
+
+gulp.task('prod:serve', ['prod:build'], () => {
   browserSync.init({
-    server: 'dist'
+    server: `${buildFolder}`
   });
 });
 
-gulp.task('dev:serve', ['lint', 'html', 'styles', 'dev:scripts', 'dev:service-worker', 'images'], () => {
+gulp.task('dev:serve', ['dev:build'], () => {
   gulp.watch('*.html', ['html']);
-  gulp.watch('css/**/*.css', ['styles']);
-  gulp.watch('js/**/*.js', ['lint', 'dev:scripts', 'dev:service-worker']);
+  gulp.watch('css/**/*.scss', ['dev:styles']);
+  gulp.watch(['js/**/*.js', '!js/service-worker.js'], ['lint', 'dev:scripts']);
+  gulp.watch('js/service-worker.js', ['lint', 'dev:service-worker']);
 
-  gulp.watch(['dist/*.html', 'dist/js/bundle.js', 'dist/css/**/*.css']).on('change', browserSync.reload);
+  gulp.watch([`${buildFolder}/*.html`, `${buildFolder}/js/**/*.bundle.js`, `${buildFolder}/css/**/*.css`]).on('change', browserSync.reload);
 
   browserSync.init({
-    server: 'dist'
+    server: `${buildFolder}`
   });
 });
 
 gulp.task('prod:build', done => {
-  runSequence('lint', 'clean', ['html', 'styles', 'prod:scripts', 'prod:service-worker', 'images'], done);
+  runSequence('lint', 'clean', ['html', 'prod:styles', 'prod:scripts', 'prod:service-worker', 'images'], done);
 });
 
 gulp.task('dev:build', done => {
-  runSequence('lint', 'clean', ['html', 'styles', 'dev:scripts', 'dev:service-worker', 'images'], done);
+  runSequence('lint', 'clean', ['html', 'dev:styles', 'dev:scripts', 'dev:service-worker', 'images'], done);
 });
 
 
 gulp.task('clean', () => {
-  return del('dist');
+  return del(`${buildFolder}`);
 });
 
 gulp.task('html', done => {
@@ -63,15 +68,27 @@ gulp.task('html', done => {
           tpl: '<script async defer src="https://maps.googleapis.com/maps/api/js?key=%s&libraries=places&callback=initMap"></script>'
         }
       }))
-      .pipe(gulp.dest('dist'));
+      .pipe(gulp.dest(`${buildFolder}`));
 
     done();
   });
 });
 
-gulp.task('styles', () => {
-  return gulp.src('css/**/*.css')
-    .pipe(gulp.dest('dist/css'));
+gulp.task('prod:styles', () => {
+  return gulp.src(['css/**/*.scss', '!css/base.scss'])
+    .pipe(sass({
+      outputStyle: 'compressed'
+    }).on('error', sass.logError))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions']
+    }))
+    .pipe(gulp.dest(`${buildFolder}/css`));
+});
+
+gulp.task('dev:styles', () => {
+  return gulp.src(['css/**/*.scss', '!css/base.scss'])
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(`${buildFolder}/css`));
 });
 
 gulp.task('prod:scripts', () => {
@@ -84,11 +101,11 @@ gulp.task('prod:scripts', () => {
         .bundle()
         .pipe(source(src + '.bundle.js'))
         .pipe(streamify(uglify()))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest(`${buildFolder}/js`));
     });
   };
 
-  bundleThis(['main', 'restaurant']);
+  return bundleThis(['main', 'restaurant']);
 });
 
 gulp.task('dev:scripts', () => {
@@ -100,11 +117,11 @@ gulp.task('dev:scripts', () => {
         }))
         .bundle()
         .pipe(source(src + '.bundle.js'))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest(`${buildFolder}/js`));
     });
   };
 
-  bundleThis(['main', 'restaurant']);
+  return bundleThis(['main', 'restaurant']);
 });
 
 gulp.task('prod:service-worker', () => {
@@ -115,17 +132,17 @@ gulp.task('prod:service-worker', () => {
     .bundle()
     .pipe(source('service-worker.js'))
     .pipe(streamify(uglify()))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(`${buildFolder}`));
 });
 
 gulp.task('dev:service-worker', () => {
   return gulp.src('js/service-worker.js')
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(`${buildFolder}`));
 });
 
 gulp.task('images', () => {
   return gulp.src('img/**/*.jpg')
-    .pipe(gulp.dest('dist/img'));
+    .pipe(gulp.dest(`${buildFolder}/img`));
 });
 
 gulp.task('lint', () => {

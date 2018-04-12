@@ -1,4 +1,7 @@
 @charset "utf-8";
+
+@import 'base';
+
 /* ====================== Header ====================== */
 /* Sticky header in the top of the screen */
 header {
@@ -18,34 +21,34 @@ header {
   margin: 0;
   width: 100%;
   text-align: left;
-}
 
-/* Display list items side by side */
-#breadcrumb li {
-    display: inline;
-}
+  /* Display list items side by side */
+  li {
+      display: inline;
 
-#breadcrumb li:first-child {
-  padding-left: 20px;
-}
+      /* Add a color to all links inside the list */
+      a {
+          color: #025fb1;
+          text-decoration: none;
+      }
 
-/* Add a slash symbol (/) before/behind each list item */
-#breadcrumb li+li:before {
-    padding: 10px;
-    color: black;
-    content: "/\00a0";
-}
+      /* Add a color on mouse-over */
+      a:hover {
+          color: #01447e;
+          text-decoration: underline;
+      }
+  }
 
-/* Add a color to all links inside the list */
-#breadcrumb li a {
-    color: #025fb1;
-    text-decoration: none;
-}
+  li:first-child {
+    padding-left: 20px;
+  }
 
-/* Add a color on mouse-over */
-#breadcrumb li a:hover {
-    color: #01447e;
-    text-decoration: underline;
+  /* Add a slash symbol (/) before/behind each list item */
+  li+li:before {
+      padding: 10px;
+      color: black;
+      content: "/\00a0";
+  }
 }
 
 
@@ -123,16 +126,16 @@ header {
   display: block;
   border-bottom: 1px solid #d9d9d9;
   padding-top: 20px;
-}
 
-#reviews-container h3 {
-  background-color: #333;
-  color: #ddd;
-  font-size: 20pt;
-  font-weight: 300;
-  letter-spacing: 1px;
-  padding-left: 20px;
-  padding-bottom: 0.1pt;
+  h3 {
+    background-color: #333;
+    color: #ddd;
+    font-size: 20pt;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding-left: 20px;
+    padding-bottom: 0.1pt;
+  }
 }
 
 #reviews-list {
@@ -152,44 +155,45 @@ header {
   overflow: hidden;
   padding: 0;
   position: relative;
+
+  div p,
+  article p {
+    margin: 10px 0 10px;
+    font-size: 12pt;
+  }
+
+  div.review-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    padding: 0 20px;
+
+    p {
+      color: #fff;
+    }
+
+    p.review-name {
+      font-size: 14pt;
+      font-weight: bold;
+    }
+  }
+
+  article.review-content {
+    font-size: 12pt;
+    padding: 0 20px;
+
+    p.review-rating {
+      color: #DB3A00;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    p.review-comment {
+      padding-bottom: 10px;
+    }
+  }
 }
 
-#reviews-list li div p,
-#reviews-list li article p {
-  margin: 10px 0 10px;
-  font-size: 12pt;
-}
-
-#reviews-list li div.review-header {
-  display: flex;
-  justify-content: space-between;
-  background-color: #333;
-  padding: 0 20px;
-}
-
-#reviews-list li div.review-header p {
-  color: #fff;
-}
-
-#reviews-list li div.review-header p.review-name {
-  font-size: 14pt;
-  font-weight: bold;
-}
-
-#reviews-list li article.review-content {
-  font-size: 12pt;
-  padding: 0 20px;
-}
-
-#reviews-list li article.review-content p.review-rating {
-  color: #DB3A00;
-  font-weight: bold;
-  margin: 15px 0;
-}
-
-#reviews-list li article.review-content p.review-comment {
-  padding-bottom: 10px;
-}
 
 
 /* ====================== Layout changes depends on screen width ====================== */

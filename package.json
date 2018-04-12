@@ -5,8 +5,8 @@
   "main": "gulpfile.js",
   "scripts": {
     "build": "gulp prod:build",
-    "serve": "npm run build && gulp prod:serve",
-    "dev": "gulp dev:build && gulp dev:serve"
+    "serve": "gulp prod:serve",
+    "dev": "gulp dev:serve"
   },
   "repository": {
     "type": "git",
@@ -23,9 +23,11 @@
     "browserify": "^16.1.1",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^4.0.2",
     "gulp-html-replace": "^1.6.2",
+    "gulp-sass": "^4.0.1",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^3.0.0",
     "run-sequence": "^2.2.1",

@@ -98,23 +98,23 @@ nav {
   height: 80px;
   background-color: #252831;
   text-align:center;
-}
 
-nav h1 {
-  margin: auto;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
+  h1 {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
 
-nav h1 a {
-  color: #fff;
-  font-size: 14pt;
-  font-weight: 200;
-  letter-spacing: 10px;
-  text-transform: uppercase;
+    a {
+      color: #fff;
+      font-size: 14pt;
+      font-weight: 200;
+      letter-spacing: 10px;
+      text-transform: uppercase;
+    }
+  }
 }
 
 
