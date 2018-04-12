@@ -9,7 +9,6 @@ self.addEventListener('install', event => {
       return cache.addAll([
         '/index.html',
         '/restaurant.html',
-        '/css/base.css',
         '/css/main.css',
         '/css/restaurant.css'
       ]);
