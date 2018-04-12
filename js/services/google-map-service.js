@@ -31,7 +31,7 @@ export class GoogleMapService {
     const marker = new google.maps.Marker({
       position: restaurant.latlng,
       title: restaurant.name,
-      url: `./restaurant.html?id=${restaurant.id}`,
+      url: restaurant.getRestaurantRelativeUrl(),
       map: this.map,
       animation: google.maps.Animation.DROP
     });

@@ -98,23 +98,6 @@ export class RestaurantService {
       });
   }
 
-  /**
-   * Get GoogleMaps marker using lat and lng
-   * @param {Restaurant} restaurant
-   * @param {object} map Google Map object
-   */
-  getGoogleMapMarkerForRestaurant(restaurant, map) {
-    const marker = new google.maps.Marker({
-      position: restaurant.latlng,
-      title: restaurant.name,
-      url: restaurant.getRestaurantRelativeUrl(),
-      map: map,
-      animation: google.maps.Animation.DROP
-    });
-
-    return marker;
-  }
-
   //----------------------------------------------------------------
   // Private methods
   //----------------------------------------------------------------

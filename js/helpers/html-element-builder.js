@@ -32,7 +32,7 @@ export class HtmlElementBuilder {
     image.srcset = `${imageUrl400} 400w, ${imageUrl800Compressed} 800w, ${imageUrl800} 1600w`;
     image.className = 'restaurant-img';
     // Set alt attribute for accesibility purpose. The photo os not very descriptive, so I will provide restaurant name and cuisine for the screen readers.
-    image.alt = `${restaurant.name} restaurant. Cuisine type is ${restaurant.cuisine_type}`;
+    image.alt = `${restaurant.name} restaurant. Cuisine type is ${restaurant.cuisineType}`;
     picture.append(image);
 
     return picture;

@@ -3,7 +3,7 @@
 * This code based on the Rob Dodson's code from the Udacity Mobile Web Specialist nanodegree program,
 * Web Accesebility course, Lesson name: Focus
 */
-module.exports.default = (function() {
+(function() {
   // Keyboard codes of tab, space, enter and escape buttons
   const KB_TAB = 9;
   const KB_SPACE = 32;

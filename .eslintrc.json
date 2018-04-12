@@ -7,7 +7,7 @@
     "eslint:recommended"
   ],
   "parserOptions": {
-    "sourceType": "script"
+    "sourceType": "module"
   },
   "rules": {
     "indent": [
@@ -24,7 +24,7 @@
     ],
     "no-trailing-spaces": "error",
     "no-console": "off",
-    "no-useless-escape": "off",
+    "no-useless-escape": "warn",
     "no-undef": "off",
     "no-unused-vars": "off"
   }

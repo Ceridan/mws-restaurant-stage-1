@@ -54,7 +54,7 @@ export class RestaurantPageHandler {
     image.sizes = '50vw';
 
     const cuisine = document.getElementById('restaurant-cuisine');
-    cuisine.innerHTML = restaurant.cuisine_type;
+    cuisine.innerHTML = restaurant.cuisineType;
 
     // Fill operating hours
     if (restaurant.operatingHours) {
