@@ -13,7 +13,7 @@ Or you may checkout `complete-stage-1` branch to see the state of the project wh
 To build the project you need [npm and Node.js](https://nodejs.org/) installed (tested with npm 5.6 and Node.js 9+ versions). Also you have to install [Gulp](https://gulpjs.com/) build tool.
 To install Gulp use the following command:
 ```
-npm install -g gulp-cli
+$ npm install -g gulp-cli
 ```
 The project uses Google Maps and you have to provide your own [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) to use it. To do this you should create `secret.json` file in the root folder of the project and add the following information to it:
 ```
@@ -24,8 +24,8 @@ The project uses Google Maps and you have to provide your own [Google Maps API k
 
 Now you are ready to build the project. Use the following commands:
 ```
-# npm install
-# npm run build
+$ npm install
+$ npm run build
 ```
 The `dist` folder should appear in the project directory.
 
@@ -38,25 +38,25 @@ You should have the `dist` folder after completing step 1. You have few options 
 **Option 1.** Using any webserver you have. For example you may start up a simple HTTP server from your terminal using [Python](https://www.python.org/).
 For Python 2.x version:
 ```
-# python -m SimpleHTTPServer 8000
+$ python -m SimpleHTTPServer 8000
 ```
 
 For Python 3.x version:
 ```
-# python -m http.server 8000
+$ python -m http.server 8000
 ```
 Now the Restaurant Review project is available via URL: `http://localhost:8000`
 
 **Option 2.** You may serve the project using [BrowserSync](https://browsersync.io/). To do this run the following command:
 ```
-# npm run serve
+$ npm run serve
 ```
 Now the Restaurant Review project is available via URL: `http://localhost:3000`
 
 
 **Option 3.** You may serve the project using [BrowserSync](https://browsersync.io/) in developer mode. It means that you will have the same project, but without minification CSS and JS files. So it allows to debug the project using the [Google Developer Tools](https://developer.chrome.com/devtools). To do this run the following command:
 ```
-# npm run dev
+$ npm run dev
 ```
 Now the Restaurant Review project is available via URL: `http://localhost:3000`
 
