@@ -7,6 +7,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(staticCacheName).then(cache => {
       return cache.addAll([
+        '/manifest.json',
         '/index.html',
         '/restaurant.html',
         '/css/main.css',

@@ -37,11 +37,11 @@ gulp.task('dev:serve', ['dev:build'], () => {
 });
 
 gulp.task('prod:build', done => {
-  runSequence('lint', 'clean', ['html', 'prod:styles', 'prod:scripts', 'prod:service-worker', 'images'], done);
+  runSequence('lint', 'clean', ['html', 'prod:styles', 'prod:scripts', 'prod:service-worker', 'images', 'manifest'], done);
 });
 
 gulp.task('dev:build', done => {
-  runSequence('lint', 'clean', ['html', 'dev:styles', 'dev:scripts', 'dev:service-worker', 'images'], done);
+  runSequence('lint', 'clean', ['html', 'dev:styles', 'dev:scripts', 'dev:service-worker', 'images', 'manifest'], done);
 });
 
 
@@ -141,7 +141,7 @@ gulp.task('dev:service-worker', () => {
 });
 
 gulp.task('images', () => {
-  return gulp.src('img/**/*.jpg')
+  return gulp.src(['img/**/*.jpg', 'img/**/*.png', 'img/**/*.svg'])
     .pipe(gulp.dest(`${buildFolder}/img`));
 });
 
@@ -150,4 +150,9 @@ gulp.task('lint', () => {
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError());
+});
+
+gulp.task('manifest', () => {
+  return gulp.src('manifest.json')
+    .pipe(gulp.dest(`${buildFolder}`));
 });
