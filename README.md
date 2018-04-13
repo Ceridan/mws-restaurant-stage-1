@@ -30,7 +30,7 @@ $ npm run build
 The `dist` folder should appear in the project directory.
 
 ### Step 2. How to run the Restaurant Review server project
-To work with stage 2 code you have to run the server project which provides all restaurant review data. To run it you have to clone the [Server Project](https://github.com/udacity/mws-restaurant-stage-2) and follow the instructions how to run it in the `README`.
+To work with stage 2 code you have to run the server project which provides all restaurant review data. To run it you have to clone the [Server Project](https://github.com/udacity/mws-restaurant-stage-2) and follow the instructions how to run it in the `README.md`.
 
 ### Step 3. How to run the Restaurant Review project
 You should have the `dist` folder after completing step 1. You have few options how to run the project.
@@ -63,6 +63,3 @@ Now the Restaurant Review project is available via URL: `http://localhost:3000`
 ### Note about ES6
 
 Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write. 
-
-
-
