@@ -47,6 +47,13 @@ $ python -m http.server 8000
 ```
 Now the Restaurant Review project is available via URL: `http://localhost:8000`
 
+---
+**Warning**
+
+I have noticed that when you perform a Lighthouse Audit from the Google Developer Tools against project running via python http server it crushes sometimes after fetching `manifest.json` and then restarts itself. In this case audit report will be unfair. So, if you use python http server keep an eye on the server console.
+
+---
+
 **Option 2.** You may serve the project using [BrowserSync](https://browsersync.io/). To do this run the following command:
 ```
 $ npm run serve
