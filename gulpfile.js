@@ -13,13 +13,17 @@ const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const runSequence = require('run-sequence');
 const del = require('del');
+const compression   = require('compression');
 const browserSync = require('browser-sync').create();
 
 const buildFolder = 'dist';
 
 gulp.task('prod:serve', ['prod:build'], () => {
   browserSync.init({
-    server: `${buildFolder}`
+    server:  {
+      baseDir: `${buildFolder}`,
+      middleware: compression()
+    }
   });
 });
 
