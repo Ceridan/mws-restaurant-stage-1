@@ -318,3 +318,18 @@ Show restaurant list item card in two columns to fill the empty space on the scr
     width: 280px;
   }
 }
+
+
+/* Fix entire content width */
+@media screen and (min-width: 1600px) {
+  body {
+    max-width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  #maincontent {
+    border-right: 1px #333 solid;
+    border-left: 1px #333 solid;
+  }
+}

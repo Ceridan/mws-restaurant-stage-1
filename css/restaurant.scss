@@ -271,8 +271,26 @@ header {
   }
 }
 
-/* Adjust fonts for large screens */
+/* Adjust fonts for large screens and fix entire content width */
 @media screen and (min-width: 1600px) {
+  body,
+  header {
+    max-width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  #maincontent {
+    border-right: 1px #333 solid;
+    border-left: 1px #333 solid;
+  }
+
+  #breadcrumb {
+    width: calc(100% - 2px);
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   #restaurant-address {
     font-size: 16pt;
   }
