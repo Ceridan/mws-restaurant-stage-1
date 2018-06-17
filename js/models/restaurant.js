@@ -6,30 +6,18 @@ import { OperatingHours } from './operating-hours';
  * Review class describes a single restaurant entity
  */
 export class Restaurant {
-  constructor({
-    id,
-    name,
-    neighborhood,
-    photograph,
-    address,
-    latlng,
-    cuisine_type,
-    operating_hours,
-    reviews = [],
-    createdAt,
-    updatedAt
-  }) {
-    this.id = id;
-    this.name = name;
-    this.neighborhood = neighborhood;
-    this.photograph = photograph;
-    this.address = address;
-    this.latlng = new LatLng(latlng);
-    this.cuisineType = cuisine_type;
-    this.operatingHours = new OperatingHours(operating_hours);
-    this.reviews = reviews.map(review => new Review(review));
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+  constructor(obj) {
+    this.id = obj.id;
+    this.name = obj.name;
+    this.neighborhood = obj.neighborhood;
+    this.photograph = obj.photograph;
+    this.address = obj.address;
+    this.latlng = new LatLng(obj.latlng);
+    this.cuisineType = obj.cuisine_type || obj.cuisineType;
+    this.operatingHours = new OperatingHours(obj.operating_hours || obj.operatingHours);
+    this.createdAt = obj.createdAt;
+    this.updatedAt = obj.updatedAt;
+    this.isFavorite = obj.is_favorite || obj.isFavorite || false;
   }
 
   /**

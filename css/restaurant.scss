@@ -87,6 +87,35 @@ header {
   padding: 2px 0;
   text-transform: uppercase;
   text-align: center;
+  width: calc(75% - 10px);
+  line-height: 32px;
+  height: 32px;
+}
+
+#restaurant-favorite {
+  color: #333;
+  font-family: Arial,sans-serif;
+  font-size: 10pt;
+  font-weight: 300;
+  width: 25%;
+  height: 36px;
+  margin: 10px 0 10px 0;
+
+  input[type=checkbox] {
+    display: none;
+  }
+
+  .large {
+    display: none;
+  }
+
+  .small {
+    font-size: 14pt;
+  }
+}
+
+#restaurant-favorite.favorite {
+  background-color: orange;
 }
 
 #restaurant-container {
@@ -106,7 +135,11 @@ header {
   width: 90%;
   margin-left: auto;
 	margin-right: auto;
-	display: block;
+  display: block;
+
+  .container {
+    justify-content: space-between;
+  }
 }
 
 
@@ -224,6 +257,19 @@ header {
   .restaurant-address-schedule {
     width: calc(40% - 5px);
     padding: 10px 0 10px;
+  }
+}
+
+/* For large screens change text for favorite button */
+@media screen and (min-width: 650px) {
+  #restaurant-favorite {
+    .large {
+      display: block;
+    }
+
+    .small {
+      display: none;
+    }
   }
 }
 

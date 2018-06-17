@@ -56,6 +56,12 @@ export class HtmlElementBuilder {
 
     const name = document.createElement('h2');
     name.innerHTML = restaurant.name;
+
+    if (restaurant.isFavorite) {
+      name.className = 'favorite';
+      name.setAttribute('aria-label', `${restaurant.name} (marked as favorite)`);
+    }
+
     div.append(name);
 
     // Create address element instead of div for correct semantics

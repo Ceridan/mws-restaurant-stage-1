@@ -75,6 +75,12 @@ header {
       text-transform: uppercase;
     }
 
+    .favorite::after {
+      content: " ★";
+      color: orange;
+      font-size: 16pt;
+    }
+
     div {
       width: 100%;
       height: 160px;

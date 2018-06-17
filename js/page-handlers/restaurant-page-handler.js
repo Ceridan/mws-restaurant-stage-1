@@ -24,6 +24,11 @@ export class RestaurantPageHandler {
         this.restaurant = restaurant;
         this.fillRestaurantHtml(restaurant);
         this.fillBreadcrumb(restaurant);
+
+        this.fetchReviewByRestaurantId(restaurant.id)
+          .then(reviews => {
+            this.fillReviewsHtml(reviews);
+          });
       })
       .catch(err => console.error(err));
   }
@@ -56,13 +61,25 @@ export class RestaurantPageHandler {
     const cuisine = document.getElementById('restaurant-cuisine');
     cuisine.innerHTML = restaurant.cuisineType;
 
+    const favorite = document.getElementById('restaurant-favorite');
+    const favoriteLarge = favorite.querySelector('.large');
+
+    if (restaurant.isFavorite) {
+      favorite.className = 'favorite';
+      this.fillFavoriteButtonText(restaurant, favorite, favoriteLarge);
+    }
+
+    favorite.addEventListener('click', () => {
+      favorite.classList.toggle('favorite');
+      restaurant.isFavorite = !restaurant.isFavorite;
+      this.fillFavoriteButtonText(restaurant, favorite, favoriteLarge);
+      this.restaurantService.saveRestaurant(restaurant);
+    });
+
     // Fill operating hours
     if (restaurant.operatingHours) {
       this.fillRestaurantHoursHtml(restaurant.operatingHours);
     }
-
-    // Fill reviews
-    this.fillReviewsHtml(restaurant.reviews);
   }
 
   /**
@@ -166,5 +183,33 @@ export class RestaurantPageHandler {
     }
 
     return this.restaurantService.getRestaurantById(id);
+  }
+
+  /**
+   * Fetch reviews depends on URL
+   * @returns {Promise<Array<Review>>} reviews array
+   */
+  fetchReviewByRestaurantId(restaurantId) {
+    if (!restaurantId) {
+      return Promise.resolve([]);
+    }
+
+    return this.restaurantService.getReviewsByRestaurantId(restaurantId);
+  }
+
+  /**
+   * Set text and aria-label for Favorite button
+   * @param {Restaurant} restaurant - resturant object
+   * @param {HTMLElement} favorite - favorite button element
+   * @param {HTMLElement} favoriteLarge - favorite button span element with class large
+   */
+  fillFavoriteButtonText(restaurant, favorite, favoriteLarge) {
+    if (restaurant.isFavorite) {
+      favoriteLarge.textContent = 'My favorite!';
+      favorite.setAttribute('aria-label', 'My favorite!');
+    } else {
+      favoriteLarge.textContent = 'Mark as favorite';
+      favorite.setAttribute('aria-label', 'Mark as favorite');
+    }
   }
 }

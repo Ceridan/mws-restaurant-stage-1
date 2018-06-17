@@ -1,13 +1,13 @@
 import { IndexedDbService } from './idb-service';
 import { Restaurant } from '../models/restaurant';
+import { Review } from '../models/review';
 
 export class RestaurantService {
   constructor() {
     const port = 1337;
-    this.serverUrl = `http://localhost:${port}/restaurants/`;
+    this.serverUrl = `http://localhost:${port}`;
 
     this.db = new IndexedDbService();
-    this.restaurants = [];
   }
 
   //----------------------------------------------------------------
@@ -19,12 +19,9 @@ export class RestaurantService {
    * @returns {Promise<Array<Restaurant>>} returns promise with all restaurants as JSON
    */
   getRestaurants() {
-    if (this.restaurants.length > 0) {
-      return Promise.resolve(this.restaurants);
-    }
-
     return this.db.getRestaurants()
       .then(restaurants => {
+        restaurants.sort((r1, r2) => r2.isFavorite - r1.isFavorite || r1.id - r2.id);
         return Promise.resolve(restaurants);
       })
       .catch(() => {
@@ -46,6 +43,14 @@ export class RestaurantService {
         return this.fetchRestaurants()
           .then(restaurants => Promise.resolve(restaurants.find(restaurant => restaurant.id == id)));
       });
+  }
+
+  /**
+   * Save changes in the restaurant to the idb
+   * @param {*} restaurant - restaurant object
+   */
+  saveRestaurant(restaurant) {
+    this.db.saveRestaurants([restaurant]);
   }
 
   /**
@@ -98,6 +103,21 @@ export class RestaurantService {
       });
   }
 
+  /**
+   * Get all reviews for restaurant
+   * @param {string} restaurnatId  - restaurant id
+   */
+  getReviewsByRestaurantId(restaurnatId) {
+    return this.db.getReviewsByRestaurantId(restaurnatId)
+      .then(reviews => {
+        return Promise.resolve(reviews);
+      })
+      .catch(() => {
+        return this.fetchReviewsByRestaurantId(restaurnatId);
+      });
+  }
+
+
   //----------------------------------------------------------------
   // Private methods
   //----------------------------------------------------------------
@@ -108,12 +128,34 @@ export class RestaurantService {
    * @returns {Promise<Array<Restaurant>>} returns promise with all restaurants as JSON
    */
   fetchRestaurants() {
-    return fetch(this.serverUrl)
+    const restaurantsEndpoint = `${this.serverUrl}/restaurants`;
+
+    return fetch(restaurantsEndpoint)
       .then(response => response.json())
       .then(restaurantJson => {
-        this.restaurants = restaurantJson.map(restaurant => new Restaurant(restaurant));
-        this.db.saveRestaurants(this.restaurants);
-        return Promise.resolve(this.restaurants);
+        const restaurants = restaurantJson.map(restaurant => new Restaurant(restaurant));
+        restaurants.sort((r1, r2) => r2.isFavorite - r1.isFavorite || r1.id - r2.id);
+
+        this.db.saveRestaurants(restaurants);
+        return Promise.resolve(restaurants);
+      })
+      .catch(err => Promise.reject(`Fetch request to the remote server failed. Error: ${err}`));
+  }
+
+  /**
+   * Fetch review for restaurant from the server and save to IndexedDB
+   * @param {string} restaurantId - restaurant id
+   */
+  fetchReviewsByRestaurantId(restaurantId) {
+    const reviewsEndpoint = `${this.serverUrl}/reviews/?restaurant_id=${restaurantId}`;
+
+    return fetch(reviewsEndpoint)
+      .then(response => response.json())
+      .then(reviewJson => {
+        const reviews = reviewJson.map(review => new Review(review));
+
+        this.db.saveReviews(reviews);
+        return Promise.resolve(reviews);
       })
       .catch(err => Promise.reject(`Fetch request to the remote server failed. Error: ${err}`));
   }

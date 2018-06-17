@@ -6,8 +6,11 @@ import { Restaurant } from '../models/restaurant';
  */
 export class IndexedDbService {
   constructor() {
-    this.db = idb.open('restaurant-db', 1, upgradeDb => {
-      upgradeDb.createObjectStore('restaurant', { keyPath: 'id' });
+    this.db = idb.open('restaurant-db', 2, upgradeDb => {
+      upgradeDb.createObjectStore('restaurants', { keyPath: 'id' });
+
+      upgradeDb.createObjectStore('reviews', { keyPath: 'id' })
+        .createIndex('restaurant', 'restaurantId');
     });
   }
 
@@ -16,7 +19,7 @@ export class IndexedDbService {
    */
   getRestaurants() {
     return this.db.then(db => {
-      const store = db.transaction('restaurant').objectStore('restaurant');
+      const store = db.transaction('restaurants').objectStore('restaurants');
       return store.getAll();
     }).then(restaurants => {
       if (restaurants && restaurants.length > 0)
@@ -32,7 +35,7 @@ export class IndexedDbService {
    */
   getRestaurantById(id) {
     return this.db.then(db => {
-      const store = db.transaction('restaurant').objectStore('restaurant');
+      const store = db.transaction('restaurants').objectStore('restaurants');
       return store.get(parseInt(id));
     }).then(restaurant => {
       if (restaurant)
@@ -47,11 +50,42 @@ export class IndexedDbService {
    */
   saveRestaurants(restaurants) {
     this.db.then(db => {
-      const transaction = db.transaction('restaurant', 'readwrite');
-      const store = transaction.objectStore('restaurant');
+      const transaction = db.transaction('restaurants', 'readwrite');
+      const store = transaction.objectStore('restaurants');
 
       restaurants.forEach(restaurant => {
         store.put(restaurant);
+      });
+    });
+  }
+
+  /**
+   * @param {string} restaurantId - restaurant id
+   * @returns {Promise<Array<Review>>} - array with stored reviews for restaurant
+   */
+  getReviewsByRestaurantId(restaurantId) {
+    return this.db.then(db => {
+      const store = db.transaction('reviews').objectStore('reviews');
+      const index = store.index('restaurant');
+      return index.getAll(parseInt(restaurantId));
+    }).then(reviews => {
+      if (reviews && reviews.length > 0)
+        return Promise.resolve(reviews.map(review => new Review(review)));
+      else
+        return Promise.reject(`Reviews for restaurant with id = ${id} not found in indexedDB`);
+    });
+  }
+
+  /**
+   * @param {Array<Review>} reviews array of reviews to save in IndexedDB
+   */
+  saveReviews(reviews) {
+    this.db.then(db => {
+      const transaction = db.transaction('reviews', 'readwrite');
+      const store = transaction.objectStore('reviews');
+
+      reviews.forEach(review => {
+        store.put(review);
       });
     });
   }
