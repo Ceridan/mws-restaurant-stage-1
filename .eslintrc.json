@@ -12,7 +12,8 @@
   "rules": {
     "indent": [
       "error",
-      2
+      2,
+      { "SwitchCase": 1 }
     ],
     "quotes": [
       "error",
@@ -26,6 +27,7 @@
     "no-console": "off",
     "no-useless-escape": "warn",
     "no-undef": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-fallthrough": "off"
   }
 }
