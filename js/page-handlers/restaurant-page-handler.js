@@ -24,6 +24,7 @@ export class RestaurantPageHandler {
         this.restaurant = restaurant;
         this.fillRestaurantHtml(restaurant);
         this.fillBreadcrumb(restaurant);
+        this.setupReviewDialog();
 
         this.fetchReviewByRestaurantId(restaurant.id)
           .then(reviews => {
@@ -65,7 +66,7 @@ export class RestaurantPageHandler {
     const favoriteLarge = favorite.querySelector('.large');
 
     if (restaurant.isFavorite) {
-      favorite.className = 'favorite';
+      favorite.classList.add('favorite');
       this.fillFavoriteButtonText(restaurant, favorite, favoriteLarge);
     }
 
@@ -110,9 +111,6 @@ export class RestaurantPageHandler {
    */
   fillReviewsHtml(reviews) {
     const container = document.getElementById('reviews-container');
-    const title = document.createElement('h3');
-    title.innerHTML = 'Reviews';
-    container.appendChild(title);
 
     if (!reviews) {
       const noReviews = document.createElement('p');
@@ -164,6 +162,66 @@ export class RestaurantPageHandler {
         this.googleMapService.addMarkersToMap([restaurant]);
       })
       .catch(err => console.error(`Could not load the map cause of error: ${err}`));
+  }
+
+  /**
+   * Add event listeners to work with review dialog
+   */
+  setupReviewDialog() {
+    const dialog = document.getElementById('review-dialog');
+    const openDialogButton = document.getElementsByClassName('button-review')[0];
+    const saveDialogButton = document.getElementsByClassName('button-review-save')[0];
+    const cancelDialogButton = document.getElementsByClassName('button-review-cancel')[0];
+    const ratingSelect = document.getElementById('review-form-rating');
+
+    dialog.addEventListener('keydown', trapTabKey);
+
+    openDialogButton.addEventListener('click', e => {
+      e.stopPropagation();
+      dialog.showModal();
+    });
+
+    saveDialogButton.addEventListener('click', e => {
+      e.stopPropagation();
+      closeDialog();
+    });
+
+    cancelDialogButton.addEventListener('click', e => {
+      e.stopPropagation();
+      closeDialog();
+    });
+
+    function trapTabKey(e) {
+      const KB_TAB = 9;
+      const KB_ESCAPE = 27;
+
+      if (e.keyCode === KB_TAB) {
+        // SHIFT + TAB
+        if (e.shiftKey) {
+          if (document.activeElement === ratingSelect) {
+            e.preventDefault();
+            cancelDialogButton.focus();
+          }
+
+        // TAB
+        } else {
+          if (document.activeElement === cancelDialogButton) {
+            e.preventDefault();
+            ratingSelect.focus();
+          }
+        }
+      }
+
+      // ESCAPE
+      if (e.keyCode === KB_ESCAPE) {
+        closeDialog();
+      }
+    }
+
+    function closeDialog() {
+      dialog.removeEventListener('keydown', trapTabKey);
+      dialog.close();
+    }
   }
 
   //----------------------------------------------------------------

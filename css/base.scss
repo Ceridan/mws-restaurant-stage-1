@@ -130,3 +130,21 @@ nav {
   display: flex;
   flex-wrap: wrap;
 }
+
+/* ====================== Button styles ====================== */
+.button {
+  background-color: white; /* Green */
+  border: 2px solid #333;
+  color: #333;
+  height: 36px;
+  padding: 0 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12pt;
+  font-weight: 300;
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: orange;
+}

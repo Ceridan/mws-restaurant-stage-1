@@ -51,6 +51,7 @@ export class RestaurantService {
    */
   saveRestaurant(restaurant) {
     this.db.saveRestaurants([restaurant]);
+    this.updateRestaurantFavorite(restaurant);
   }
 
   /**
@@ -158,5 +159,18 @@ export class RestaurantService {
         return Promise.resolve(reviews);
       })
       .catch(err => Promise.reject(`Fetch request to the remote server failed. Error: ${err}`));
+  }
+
+  /**
+   * Create PUT request to the server to set restaurant as favorite
+   * @param {*} restaurant - restaurant object
+   */
+  updateRestaurantFavorite(restaurant) {
+    const favoriteEndpoint = `${this.serverUrl}/restaurants/${restaurant.id}/?is_favorite=${restaurant.isFavorite}`;
+
+    return fetch(favoriteEndpoint, {
+      method: 'PUT'
+    })
+      .catch(err => console.log(err));
   }
 }

@@ -30,7 +30,7 @@
         </picture>
         <div class="container">
           <p id="restaurant-cuisine"></p>
-          <button id="restaurant-favorite" aria-label="Mark as favorite">
+          <button id="restaurant-favorite" class="button button-favorite" aria-label="Mark as favorite">
             <span class="button-text large">Mark as favorite</span>
             <span class="button-text small">★</span>
           </button>
@@ -47,7 +47,28 @@
     </section>
 
     <section id="reviews-container">
+      <h3>Reviews</h3>
+      <button class="button button-review" aria-label="Write a review">Write a review</button>
       <ul id="reviews-list" class="container"></ul>
+
+      <dialog id="review-dialog" role="dialog">
+        <form id="review-form" method="dialog">
+          <fieldset>
+            <label for="review-form-rating">Rate the restaurant (1 to 5 stars): </label>
+            <select id="review-form-rating">
+                <option value="1">1 star</option>
+                <option value="2">2 stars</option>
+                <option value="3">3 stars</option>
+                <option value="4">4 stars</option>
+                <option value="5" selected>5 stars</option>
+            </select>
+            <label for="review-form-comment">Your review: </label>
+            <textarea id="review-form-comment" placeholder="Enter review here..." aria-placeholder="Enter review here..."></textarea>
+            <button class="button button-review-save" aria-label="Save review">Save review</button>
+            <button class="button button-review-cancel" aria-label="Cancel">Cancel</button>
+          </fieldset>
+        </form>
+      </dialog>
     </section>
   </main>
 
