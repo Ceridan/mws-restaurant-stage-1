@@ -14,7 +14,7 @@ export class Review {
 
   get date() {
     const date = new Date(this.createdAt);
-    const month = date.toLocaleString('en-us', { month: 'long' });
+    const month = date.toLocaleString('en-US', { month: 'long' });
     return `${month} ${date.getDay()}, ${date.getFullYear()}`;
   }
 }

@@ -118,6 +118,29 @@ export class RestaurantService {
       });
   }
 
+  /**
+   * Create review object and save it
+   * @param {string} restaurantId id of the reviews restaurant
+   * @param {string} name review author name
+   * @param {number} rating rating (from 1 to 5 stars)
+   * @param {string} comments review text
+   * @returns {Review} review object
+   */
+  saveReview(restaurantId, name, rating, comments) {
+    const now = Date.now();
+    const newReview = new Review({
+      id: 0,
+      restaurantId: restaurantId,
+      name: name,
+      createdAt: now,
+      updatedAt: now,
+      rating: rating,
+      comments: comments
+    });
+
+    return newReview;
+  }
+
 
   //----------------------------------------------------------------
   // Private methods

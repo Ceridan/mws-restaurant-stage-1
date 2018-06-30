@@ -172,7 +172,9 @@ export class RestaurantPageHandler {
     const openDialogButton = document.getElementsByClassName('button-review')[0];
     const saveDialogButton = document.getElementsByClassName('button-review-save')[0];
     const cancelDialogButton = document.getElementsByClassName('button-review-cancel')[0];
-    const ratingSelect = document.getElementById('review-form-rating');
+
+    const firstControl = document.getElementById('review-form-name');
+    const lastControl = cancelDialogButton;
 
     dialog.addEventListener('keydown', trapTabKey);
 
@@ -183,6 +185,7 @@ export class RestaurantPageHandler {
 
     saveDialogButton.addEventListener('click', e => {
       e.stopPropagation();
+      this.addNewReviewListItem();
       closeDialog();
     });
 
@@ -198,16 +201,16 @@ export class RestaurantPageHandler {
       if (e.keyCode === KB_TAB) {
         // SHIFT + TAB
         if (e.shiftKey) {
-          if (document.activeElement === ratingSelect) {
+          if (document.activeElement === firstControl) {
             e.preventDefault();
-            cancelDialogButton.focus();
+            lastControl.focus();
           }
 
         // TAB
         } else {
-          if (document.activeElement === cancelDialogButton) {
+          if (document.activeElement === lastControl) {
             e.preventDefault();
-            ratingSelect.focus();
+            firstControl.focus();
           }
         }
       }
@@ -269,5 +272,24 @@ export class RestaurantPageHandler {
       favoriteLarge.textContent = 'Mark as favorite';
       favorite.setAttribute('aria-label', 'Mark as favorite');
     }
+  }
+
+  /**
+   * Get values from the write a review dialog form and create new review list item element
+   */
+  addNewReviewListItem() {
+    const nameElement = document.getElementById('review-form-name');
+    const ratingElement = document.getElementById('review-form-rating');
+    const commentElement = document.getElementById('review-form-comment');
+
+    const name = nameElement.value;
+    const rating = ratingElement.options[ratingElement.selectedIndex].value;
+    const comments = commentElement.value;
+
+    const review = this.restaurantService.saveReview(this.restaurant.id, name, rating, comments);
+
+    const li = HtmlElementBuilder.createReviewListItemElement(review);
+    const ul = document.getElementById('reviews-list');
+    ul.insertBefore(li, ul.firstChild);
   }
 }
