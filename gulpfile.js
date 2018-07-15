@@ -128,7 +128,7 @@ gulp.task('dev:scripts', () => {
   return bundleThis(['main', 'restaurant']);
 });
 
-gulp.task('prod:service-worker', () => {
+gulp.task('prod:service-worker', ['dev:scripts'], () => {
   return browserify(['js/service-worker.js'])
     .transform(babelify.configure({
       presets: ['env']
@@ -140,7 +140,12 @@ gulp.task('prod:service-worker', () => {
 });
 
 gulp.task('dev:service-worker', () => {
-  return gulp.src('js/service-worker.js')
+  return browserify(['js/service-worker.js'])
+    .transform(babelify.configure({
+      presets: ['env']
+    }))
+    .bundle()
+    .pipe(source('service-worker.js'))
     .pipe(gulp.dest(`${buildFolder}`));
 });
 

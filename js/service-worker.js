@@ -1,6 +1,9 @@
+import { RestaurantService } from './services/restaurant-service';
+
 // Keep a cache name as a global scope constant, to be able to change it
 // when we have to add major changes to caching strategy
 const staticCacheName = 'restaurant-review-v2';
+const restaurantService = new RestaurantService();
 
 // Fetch and add to the cache our html and css files
 self.addEventListener('install', event => {
@@ -51,4 +54,18 @@ self.addEventListener('fetch', event => {
       });
     })
   );
+});
+
+
+// Sync events handler to process background sync with the server
+self.addEventListener('sync', event => {
+  if (event.tag === 'review') {
+    event.waitUntil(
+      restaurantService.syncReviews()
+    );
+  } else if (event.tag === 'favorite') {
+    event.waitUntil(
+      restaurantService.syncFavorites()
+    );
+  }
 });

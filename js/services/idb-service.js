@@ -1,16 +1,18 @@
 import { default as idb } from '../vendor/idb';
 import { Restaurant } from '../models/restaurant';
+import { Review } from '../models/review';
 
 /**
  * Wrapper for idb (IndexedDB with promises)
  */
 export class IndexedDbService {
   constructor() {
-    this.db = idb.open('restaurant-db', 2, upgradeDb => {
+    this.db = idb.open('restaurant-db', 3, upgradeDb => {
       upgradeDb.createObjectStore('restaurants', { keyPath: 'id' });
 
-      upgradeDb.createObjectStore('reviews', { keyPath: 'id' })
-        .createIndex('restaurant', 'restaurantId');
+      const reviewsStore = upgradeDb.createObjectStore('reviews', { keyPath: 'guid' });
+      reviewsStore.createIndex('id', 'id');
+      reviewsStore.createIndex('restaurant', 'restaurantId');
     });
   }
 
@@ -49,13 +51,33 @@ export class IndexedDbService {
    * @param {Array<Restaurant>} restaurants array of restaurants to save in IndexedDB
    */
   saveRestaurants(restaurants) {
-    this.db.then(db => {
+    return this.db.then(db => {
       const transaction = db.transaction('restaurants', 'readwrite');
       const store = transaction.objectStore('restaurants');
 
+      var dbPromises = [];
+
       restaurants.forEach(restaurant => {
-        store.put(restaurant);
+        dbPromises.push(store.put(restaurant));
       });
+
+      return Promise.all(dbPromises);
+    });
+  }
+
+  /**
+   * Get restaurants which waiting for sync (has isSynced = false)
+   * @returns {Promise<Array<Restaurant>>} list of reviews with id = 0
+   */
+  getSyncRestaurants() {
+    return this.db.then(db => {
+      const store = db.transaction('restaurants').objectStore('restaurants');
+      return store.getAll();
+    }).then(restaurants => {
+      if (!restaurants) return Promise.resolve([]);
+
+      const syncRestaurants = restaurants.filter(restaurant => !restaurant.isSynced);
+      return Promise.resolve(syncRestaurants || []);
     });
   }
 
@@ -78,15 +100,34 @@ export class IndexedDbService {
 
   /**
    * @param {Array<Review>} reviews array of reviews to save in IndexedDB
+   * @returns {Promise<Array>}
    */
   saveReviews(reviews) {
-    this.db.then(db => {
+    return this.db.then(db => {
       const transaction = db.transaction('reviews', 'readwrite');
       const store = transaction.objectStore('reviews');
 
+      var dbPromises = [];
+
       reviews.forEach(review => {
-        store.put(review);
+        dbPromises.push(store.put(review));
       });
+
+      return Promise.all(dbPromises);
+    });
+  }
+
+  /**
+   * Get reviews which waiting for sync (has id = 0)
+   * @returns {Promise<Array<Review>>} list of reviews with id = 0
+   */
+  getSyncReviews() {
+    return this.db.then(db => {
+      const store = db.transaction('reviews').objectStore('reviews');
+      const index = store.index('id');
+      return index.getAll(0);
+    }).then(reviews => {
+      return Promise.resolve(reviews || []);
     });
   }
 }

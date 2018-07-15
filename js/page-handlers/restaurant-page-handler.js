@@ -74,7 +74,7 @@ export class RestaurantPageHandler {
       favorite.classList.toggle('favorite');
       restaurant.isFavorite = !restaurant.isFavorite;
       this.fillFavoriteButtonText(restaurant, favorite, favoriteLarge);
-      this.restaurantService.saveRestaurant(restaurant);
+      this.restaurantService.saveFavorite(restaurant);
     });
 
     // Fill operating hours
@@ -124,6 +124,9 @@ export class RestaurantPageHandler {
       ul.appendChild(HtmlElementBuilder.createReviewListItemElement(review));
     });
     container.appendChild(ul);
+
+    this.restaurantService.requestBackgroundSync('review');
+    this.restaurantService.requestBackgroundSync('favorite');
   }
 
   /**
@@ -180,6 +183,7 @@ export class RestaurantPageHandler {
 
     openDialogButton.addEventListener('click', e => {
       e.stopPropagation();
+      this.clearDialogForm();
       dialog.showModal();
     });
 
@@ -272,6 +276,19 @@ export class RestaurantPageHandler {
       favoriteLarge.textContent = 'Mark as favorite';
       favorite.setAttribute('aria-label', 'Mark as favorite');
     }
+  }
+
+  /**
+   * Clear review dialog form elements
+   */
+  clearDialogForm() {
+    const nameElement = document.getElementById('review-form-name');
+    const ratingElement = document.getElementById('review-form-rating');
+    const commentElement = document.getElementById('review-form-comment');
+
+    nameElement.value = '';
+    ratingElement.selectedIndex = 4;
+    commentElement.value = '';
   }
 
   /**

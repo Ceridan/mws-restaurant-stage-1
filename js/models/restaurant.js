@@ -18,6 +18,7 @@ export class Restaurant {
     this.createdAt = obj.createdAt;
     this.updatedAt = obj.updatedAt;
     this.isFavorite = obj.is_favorite || obj.isFavorite || false;
+    this.isSynced = true;
   }
 
   /**

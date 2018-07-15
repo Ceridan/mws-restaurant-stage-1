@@ -21,11 +21,14 @@ export class RestaurantService {
   getRestaurants() {
     return this.db.getRestaurants()
       .then(restaurants => {
-        restaurants.sort((r1, r2) => r2.isFavorite - r1.isFavorite || r1.id - r2.id);
         return Promise.resolve(restaurants);
       })
       .catch(() => {
         return this.fetchRestaurants();
+      })
+      .then(restaurants => {
+        restaurants.sort((r1, r2) => r2.isFavorite - r1.isFavorite || r1.id - r2.id);
+        return Promise.resolve(restaurants);
       });
   }
 
@@ -50,8 +53,34 @@ export class RestaurantService {
    * @param {*} restaurant - restaurant object
    */
   saveRestaurant(restaurant) {
-    this.db.saveRestaurants([restaurant]);
-    this.updateRestaurantFavorite(restaurant);
+    return this.db.saveRestaurants([restaurant]);
+  }
+
+  /**
+   * Save favorite flag changes
+   * @param {*} restaurant - restaurant object
+   */
+  saveFavorite(restaurant) {
+    restaurant.isSynced = false;
+    this.saveRestaurant(restaurant)
+      .then(() => this.requestBackgroundSync('favorite'));
+  }
+
+  /**
+   * Sync favorites with the server
+   * @returns {Promise<Array>}
+   */
+  syncFavorites() {
+    return this.db.getSyncRestaurants()
+      .then(restaurants => {
+        var updatePromises = [];
+
+        restaurants.forEach(restaurant => {
+          updatePromises.push(this.updateRestaurantFavorite(restaurant));
+        });
+
+        return Promise.all(updatePromises);
+      });
   }
 
   /**
@@ -113,8 +142,15 @@ export class RestaurantService {
       .then(reviews => {
         return Promise.resolve(reviews);
       })
-      .catch(() => {
+      .catch((ex) => {
         return this.fetchReviewsByRestaurantId(restaurnatId);
+      })
+      .then(reviews => {
+        reviews.sort((r1, r2) => {
+          return r2.createdAt - r1.createdAt;
+        });
+
+        return Promise.resolve(reviews);
       });
   }
 
@@ -138,9 +174,40 @@ export class RestaurantService {
       comments: comments
     });
 
+    this.db.saveReviews([newReview])
+      .then(() => this.requestBackgroundSync('review'));
+
     return newReview;
   }
 
+  /**
+   * Sync locally created review with the server
+   * @returns {Promise<Array>}
+   */
+  syncReviews() {
+    return this.db.getSyncReviews()
+      .then(reviews => {
+        var postPromises = [];
+
+        reviews.forEach(review => {
+          postPromises.push(this.postReview(review));
+        });
+
+        return Promise.all(postPromises);
+      });
+  }
+
+  /**
+   * Send sync request to ServieWorker
+   * @param {string} eventName
+   */
+  requestBackgroundSync(eventName) {
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.ready.then(reg => {
+        return reg.sync.register(eventName);
+      });
+    }
+  }
 
   //----------------------------------------------------------------
   // Private methods
@@ -158,8 +225,6 @@ export class RestaurantService {
       .then(response => response.json())
       .then(restaurantJson => {
         const restaurants = restaurantJson.map(restaurant => new Restaurant(restaurant));
-        restaurants.sort((r1, r2) => r2.isFavorite - r1.isFavorite || r1.id - r2.id);
-
         this.db.saveRestaurants(restaurants);
         return Promise.resolve(restaurants);
       })
@@ -194,6 +259,38 @@ export class RestaurantService {
     return fetch(favoriteEndpoint, {
       method: 'PUT'
     })
-      .catch(err => console.log(err));
+      .then(() => {
+        restaurant.isSynced = true;
+        return this.saveRestaurant(restaurant);
+      });
+  }
+
+  /**
+   * Post review to the server and update review object in the IndexedDb
+   * @param {Review} clientReview review object created on client
+   */
+  postReview(review) {
+    const reviewsEndpoint = `${this.serverUrl}/reviews/`;
+
+    return fetch(reviewsEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'restaurant_id': review.restaurantId,
+        'name': review.name,
+        'rating': review.rating,
+        'comments': review.comments
+      })
+    })
+      .then(response => response.json())
+      .then(reviewJson => {
+        review.id = reviewJson.id;
+        review.createdAt = reviewJson.createdAt;
+        review.updatedAt = reviewJson.updatedAt;
+
+        return this.db.saveReviews([review]);
+      });
   }
 }

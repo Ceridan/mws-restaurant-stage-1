@@ -1,8 +1,11 @@
+import { Guid } from '../helpers/guid';
+
 /**
  * Review class describes a single review entity
  */
 export class Review {
   constructor(obj) {
+    this.guid = obj.guid || Guid.NewGuid();
     this.id = obj.id;
     this.restaurantId = obj.restaurantId || obj.restaurant_id;
     this.name = obj.name;
@@ -15,6 +18,6 @@ export class Review {
   get date() {
     const date = new Date(this.createdAt);
     const month = date.toLocaleString('en-US', { month: 'long' });
-    return `${month} ${date.getDay()}, ${date.getFullYear()}`;
+    return `${month} ${date.getDate()}, ${date.getFullYear()}`;
   }
 }
