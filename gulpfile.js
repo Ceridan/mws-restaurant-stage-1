@@ -20,7 +20,7 @@ const buildFolder = 'dist';
 
 gulp.task('prod:serve', ['prod:build'], () => {
   browserSync.init({
-    server:  {
+    server: {
       baseDir: `${buildFolder}`,
       middleware: compression()
     }
