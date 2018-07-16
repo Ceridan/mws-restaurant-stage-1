@@ -192,15 +192,15 @@ header {
     margin-bottom: 10px;
   }
 
-  .button-review-save {
-    width: 200px;
-    margin: 0 0 5px 0;
-  }
+  .review-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
 
-  .button-review-cancel {
-    width: 200px;
-    margin: 0 0 5px 0;
-    float: right;
+    .button-review-save, .button-review-cancel {
+      width: 80%;
+      margin: 10px auto 10px auto;
+    }
   }
 }
 
@@ -295,6 +295,14 @@ header {
   .restaurant-address-schedule {
     width: calc(40% - 5px);
     padding: 10px 0 10px;
+  }
+
+  #review-form {
+    .review-buttons {
+      .button-review-save, .button-review-cancel {
+        width: calc(50% - 20px);
+      }
+    }
   }
 }
 
