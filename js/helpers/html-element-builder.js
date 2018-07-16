@@ -45,13 +45,6 @@ export class HtmlElementBuilder {
    */
   static createRestaurantListItemElement(restaurant) {
     const li = document.createElement('li');
-
-    // For images create picture tags using HtmlElementBuilder.
-    // Picture tag allows to provide different options for browser
-    // and it can choose the appropriate image to download
-    const picture = HtmlElementBuilder.createPictureElement(restaurant);
-    li.append(picture);
-
     const div = document.createElement('div');
 
     const name = document.createElement('h2');
@@ -77,14 +70,15 @@ export class HtmlElementBuilder {
 
     div.append(address);
 
-    const more = document.createElement('a');
-    more.innerHTML = 'View Details';
-    more.href = restaurant.getRestaurantRelativeUrl();
+    const details = document.createElement('a');
+    details.name = 'details';
+    details.innerHTML = 'View Details';
+    details.href = restaurant.getRestaurantRelativeUrl();
 
     // Add aria-label to give more information to screen readers,
     // because 'View Details' says little about real purpose of the link
-    more.setAttribute('aria-label', `${restaurant.name} restaurant details`);
-    div.append(more);
+    details.setAttribute('aria-label', `${restaurant.name} restaurant details`);
+    div.append(details);
 
     li.append(div);
 

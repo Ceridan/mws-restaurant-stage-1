@@ -8,6 +8,7 @@ export class MainPageHandler {
   constructor() {
     this.googleMapService = new GoogleMapService();
     this.restaurantService = new RestaurantService();
+    this.intersectionObserver = this.createIntersactionObserver();
   }
 
   /**
@@ -63,6 +64,22 @@ export class MainPageHandler {
   }
 
   /**
+   * Creates picture element and adds it to the restaurant card
+   * @param {HTMLLIElement} restaurantListItemElement restaurant card list item element
+   */
+  fillPictureHtml(restaurantListItemElement) {
+    const detailsAnchorElement = restaurantListItemElement.querySelector('a[name="details"]');
+    const detailsUrl = new URL(detailsAnchorElement.href);
+    const restaurantId = detailsUrl.searchParams.get('id');
+
+    this.restaurantService.getRestaurantById(restaurantId)
+      .then(restaurant => {
+        const picture = HtmlElementBuilder.createPictureElement(restaurant);
+        restaurantListItemElement.insertBefore(picture, restaurantListItemElement.firstChild);
+      });
+  }
+
+  /**
    * Update page and map for current restaurants
    */
   updateRestaurants() {
@@ -103,7 +120,9 @@ export class MainPageHandler {
     const ul = document.getElementById('restaurants-list');
 
     restaurants.forEach(restaurant => {
-      ul.append(HtmlElementBuilder.createRestaurantListItemElement(restaurant));
+      const li = HtmlElementBuilder.createRestaurantListItemElement(restaurant);
+      this.intersectionObserver.observe(li);
+      ul.append(li);
     });
 
     this.googleMapService.addMarkersToMap(restaurants);
@@ -137,5 +156,20 @@ export class MainPageHandler {
     nSelect.onchange = () => {
       this.updateRestaurants();
     };
+  }
+
+  /**
+   * Create an instance of the inresaction observer for lazy loading of restaurant images
+   * @returns {IntersectionObserver}
+   */
+  createIntersactionObserver() {
+    return new IntersectionObserver( entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.fillPictureHtml(entry.target);
+          this.intersectionObserver.unobserve(entry.target);
+        }
+      });
+    });
   }
 }
