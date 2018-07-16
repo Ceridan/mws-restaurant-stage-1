@@ -147,7 +147,9 @@ export class RestaurantService {
       })
       .then(reviews => {
         reviews.sort((r1, r2) => {
-          return r2.createdAt - r1.createdAt;
+          const date1 = new Date(r1.createdAt);
+          const date2 = new Date(r2.createdAt);
+          return date2 - date1;
         });
 
         return Promise.resolve(reviews);
