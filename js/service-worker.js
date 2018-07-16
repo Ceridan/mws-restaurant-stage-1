@@ -2,7 +2,7 @@ import { RestaurantService } from './services/restaurant-service';
 
 // Keep a cache name as a global scope constant, to be able to change it
 // when we have to add major changes to caching strategy
-const staticCacheName = 'restaurant-review-v2';
+const staticCacheName = 'restaurant-review-v3';
 const restaurantService = new RestaurantService();
 
 // Fetch and add to the cache our html and css files
