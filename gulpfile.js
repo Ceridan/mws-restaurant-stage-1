@@ -156,7 +156,7 @@ gulp.task('dev:scripts', done => {
   });
 });
 
-gulp.task('prod:service-worker', ['dev:scripts'], () => {
+gulp.task('prod:service-worker', ['prod:scripts'], () => {
   return browserify(['js/service-worker.js'])
     .transform(babelify.configure({
       presets: ['env']
@@ -167,7 +167,7 @@ gulp.task('prod:service-worker', ['dev:scripts'], () => {
     .pipe(gulp.dest(`${buildFolder}`));
 });
 
-gulp.task('dev:service-worker', () => {
+gulp.task('dev:service-worker', ['dev:scripts'], () => {
   return browserify(['js/service-worker.js'])
     .transform(babelify.configure({
       presets: ['env']
