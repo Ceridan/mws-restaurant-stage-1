@@ -9,7 +9,12 @@ import { ScriptLoader } from './helpers/load-scripts';
    */
   window.addEventListener('load', () => {
     pageHandler.updateRestaurant();
-    ScriptLoader.loadScript('https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap');
+
+    if (navigator.onLine) {
+      ScriptLoader.loadScript('https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap')
+        .then(() => document.getElementById('map-container').classList.remove('hidden'))
+        .catch(() => document.getElementById('map-container').classList.add('hidden'));
+    }
   });
 
   /**
