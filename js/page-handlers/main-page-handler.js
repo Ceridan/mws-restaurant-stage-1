@@ -127,8 +127,6 @@ export class MainPageHandler {
       this.intersectionObserver.observe(li);
       ul.append(li);
     });
-
-    // this.googleMapService.addMarkersToMap(restaurants);
   }
 
   /**
