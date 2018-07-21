@@ -13,11 +13,6 @@ export class GoogleMapService {
    * @param {number} zoom Google Maps zoom value
    */
   initMap(mapElement, initialLocation, zoom = 12) {
-    if (!navigator.onLine) {
-      mapElement.hidden = true;
-      return;
-    }
-
     this.map = new google.maps.Map(mapElement, {
       zoom: zoom,
       center: initialLocation,

@@ -132,6 +132,11 @@ export class MainPageHandler {
    * Fill map element with google maps content
    */
   fillMapHtml() {
+    if (!navigator.onLine) {
+      document.getElementById('map-container').classList.add('hidden');
+      return;
+    }
+
     const mapElement = document.getElementById('map');
 
     const initialLocation = new LatLng({
