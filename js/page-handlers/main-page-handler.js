@@ -9,6 +9,7 @@ export class MainPageHandler {
     this.googleMapService = new GoogleMapService();
     this.restaurantService = new RestaurantService();
     this.intersectionObserver = this.createIntersactionObserver();
+    this.restaurants = [];
   }
 
   /**
@@ -96,6 +97,7 @@ export class MainPageHandler {
       .then(restaurants => {
         this.resetRestaurants();
         this.fillRestaurantsHtml(restaurants);
+        this.restaurants = restaurants;
       })
       .catch(err => console.error(err));
   }
@@ -105,6 +107,7 @@ export class MainPageHandler {
    */
   resetRestaurants() {
     // Remove all restaurants
+    this.restaurants = [];
     const ul = document.getElementById('restaurants-list');
     ul.innerHTML = '';
 
@@ -125,7 +128,7 @@ export class MainPageHandler {
       ul.append(li);
     });
 
-    this.googleMapService.addMarkersToMap(restaurants);
+    // this.googleMapService.addMarkersToMap(restaurants);
   }
 
   /**
@@ -146,6 +149,7 @@ export class MainPageHandler {
     const zoom = 12;
 
     this.googleMapService.initMap(mapElement, initialLocation, zoom);
+    this.googleMapService.addMarkersToMap(this.restaurants);
   }
 
   /**

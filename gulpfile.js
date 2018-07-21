@@ -4,6 +4,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const concat = require('gulp-concat');
+const replace = require('gulp-replace');
 const streamify = require('gulp-streamify');
 const uglify = require('gulp-uglify');
 const htmlreplace = require('gulp-html-replace');
@@ -47,7 +48,6 @@ gulp.task('prod:build', done => {
 gulp.task('dev:build', done => {
   runSequence('lint', 'clean', ['html', 'dev:styles', 'dev:scripts', 'dev:service-worker', 'images', 'manifest'], done);
 });
-
 
 gulp.task('clean', () => {
   return del(`${buildFolder}`);
@@ -95,37 +95,65 @@ gulp.task('dev:styles', () => {
     .pipe(gulp.dest(`${buildFolder}/css`));
 });
 
-gulp.task('prod:scripts', () => {
-  const bundleThis = (sources) => {
-    sources.forEach(src => {
-      browserify(['js/' + src + '.js'])
-        .transform(babelify.configure({
-          presets: ['env']
-        }))
-        .bundle()
-        .pipe(source(src + '.bundle.js'))
-        .pipe(streamify(uglify()))
-        .pipe(gulp.dest(`${buildFolder}/js`));
-    });
-  };
+gulp.task('prod:scripts', done => {
+  fs.readFile('secret.json', 'utf8', (err, data) => {
+    let googleMapsApiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
 
-  return bundleThis(['main', 'restaurant']);
+    if (!err) {
+      const secret = JSON.parse(data);
+
+      if (secret && secret.GoogleMapsApiKey) {
+        googleMapsApiKey = secret.GoogleMapsApiKey;
+      }
+    }
+
+    const bundleThis = (sources) => {
+      sources.forEach(src => {
+        browserify(['js/' + src + '.js'])
+          .transform(babelify.configure({
+            presets: ['env']
+          }))
+          .bundle()
+          .pipe(source(src + '.bundle.js'))
+          .pipe(replace('YOUR_GOOGLE_MAPS_API_KEY', googleMapsApiKey))
+          .pipe(streamify(uglify()))
+          .pipe(gulp.dest(`${buildFolder}/js`));
+      });
+    };
+
+    bundleThis(['main', 'restaurant']);
+    done();
+  });
 });
 
-gulp.task('dev:scripts', () => {
-  const bundleThis = (sources) => {
-    sources.forEach(src => {
-      browserify(['js/' + src + '.js'])
-        .transform(babelify.configure({
-          presets: ['env']
-        }))
-        .bundle()
-        .pipe(source(src + '.bundle.js'))
-        .pipe(gulp.dest(`${buildFolder}/js`));
-    });
-  };
+gulp.task('dev:scripts', done => {
+  fs.readFile('secret.json', 'utf8', (err, data) => {
+    let googleMapsApiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
 
-  return bundleThis(['main', 'restaurant']);
+    if (!err) {
+      const secret = JSON.parse(data);
+
+      if (secret && secret.GoogleMapsApiKey) {
+        googleMapsApiKey = secret.GoogleMapsApiKey;
+      }
+    }
+
+    const bundleThis = (sources) => {
+      sources.forEach(src => {
+        browserify(['js/' + src + '.js'])
+          .transform(babelify.configure({
+            presets: ['env']
+          }))
+          .bundle()
+          .pipe(source(src + '.bundle.js'))
+          .pipe(replace('YOUR_GOOGLE_MAPS_API_KEY', googleMapsApiKey))
+          .pipe(gulp.dest(`${buildFolder}/js`));
+      });
+    };
+
+    bundleThis(['main', 'restaurant']);
+    done();
+  });
 });
 
 gulp.task('prod:service-worker', ['dev:scripts'], () => {

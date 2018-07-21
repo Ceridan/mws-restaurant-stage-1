@@ -1,5 +1,6 @@
 import { MainPageHandler } from './page-handlers/main-page-handler';
 import './partial-view/modal-drawer';
+import { ScriptLoader } from './helpers/load-scripts';
 
 (function() {
   const pageHandler = new MainPageHandler();
@@ -19,6 +20,8 @@ import './partial-view/modal-drawer';
     pageHandler.fetchNeighborhoods();
     pageHandler.updateRestaurants();
     pageHandler.setPageEventListeners();
+
+    ScriptLoader.loadScript('https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap');
   });
 
   /**
