@@ -13,6 +13,11 @@ export class GoogleMapService {
    * @param {number} zoom Google Maps zoom value
    */
   initMap(mapElement, initialLocation, zoom = 12) {
+    if (!navigator.onLine) {
+      mapElement.hidden = true;
+      return;
+    }
+
     this.map = new google.maps.Map(mapElement, {
       zoom: zoom,
       center: initialLocation,
@@ -46,11 +51,14 @@ export class GoogleMapService {
   addMarkersToMap(restaurants) {
     restaurants.forEach(restaurant => {
       const marker = this.getGoogleMapMarkerForRestaurant(restaurant);
-      google.maps.event.addListener(marker, 'click', () => {
-        window.location.href = marker.url;
-      });
 
-      this.markers.push(marker);
+      if (marker) {
+        google.maps.event.addListener(marker, 'click', () => {
+          window.location.href = marker.url;
+        });
+
+        this.markers.push(marker);
+      }
     });
   }
 

@@ -133,6 +133,7 @@ export class MainPageHandler {
    */
   fillMapHtml() {
     const mapElement = document.getElementById('map');
+
     const initialLocation = new LatLng({
       lat: 40.722216,
       lng: -73.987501

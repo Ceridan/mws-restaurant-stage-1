@@ -30,6 +30,9 @@ export class RestaurantPageHandler {
           .then(reviews => {
             this.fillReviewsHtml(reviews);
           });
+
+        this.restaurantService.requestBackgroundSync('review');
+        this.restaurantService.requestBackgroundSync('favorite');
       })
       .catch(err => console.error(err));
   }
@@ -124,9 +127,6 @@ export class RestaurantPageHandler {
       ul.appendChild(HtmlElementBuilder.createReviewListItemElement(review));
     });
     container.appendChild(ul);
-
-    this.restaurantService.requestBackgroundSync('review');
-    this.restaurantService.requestBackgroundSync('favorite');
   }
 
   /**
