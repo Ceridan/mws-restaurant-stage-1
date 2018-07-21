@@ -8,36 +8,19 @@ export class ScriptLoader {
    * @returns {Promise<void>} with the result of loading operation
    */
   static loadScript(url) {
-    return ScriptLoader.loadScripts([url]);
-  }
-
-  /**
-   * Loads a bunch of js files
-   * @param {Array<string>} urls array of script urls
-   * @returns {Promise<void>} loads the result of operation. Succeed only if all files were loaded correctly
-   */
-  static loadScripts(urls) {
-    if (urls.length == 0) {
-      return Promise.resolve();
-    }
-
-    const scriptPromises = [];
-
-    urls.forEach((url) => {
+    return new Promise((resolve, reject) => {
       const script = document.createElement('script');
 
       script.onload = () => {
-        scriptPromises.push(Promise.resolve());
+        resolve();
       };
 
       script.onerror = function() {
-        scriptPromises.push(Promise.reject());
+        reject();
       };
 
       script.src = url;
       document.body.appendChild(script);
     });
-
-    return Promise.all(scriptPromises);
   }
 }
