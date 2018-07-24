@@ -35,33 +35,13 @@ To work with stage 3 code you have to run the server project which provides all 
 ### Step 3. How to run the Restaurant Review project
 You should have the `dist` folder after completing step 1. You have few options how to run the project.
 
-**Option 1.** Using any webserver you have. For example you may start up a simple HTTP server from your terminal using [Python](https://www.python.org/).
-For Python 2.x version:
-```
-$ python -m SimpleHTTPServer 8000
-```
-
-For Python 3.x version:
-```
-$ python -m http.server 8000
-```
-Now the Restaurant Review project is available via URL: `http://localhost:8000`
-
----
-**Warning**
-
-I have noticed that when you perform a Lighthouse Audit from the Google Developer Tools against project running via python http server it crushes sometimes after fetching `manifest.json` and then restarts itself. In this case audit report will be unfair. So, if you use python http server keep an eye on the server console.
-
----
-
-**Option 2.** You may serve the project using [BrowserSync](https://browsersync.io/). To do this run the following command:
+**Option 1.** You may serve the project using [BrowserSync](https://browsersync.io/). To do this run the following command:
 ```
 $ npm run serve
 ```
 Now the Restaurant Review project is available via URL: `http://localhost:3000`
 
-
-**Option 3.** You may serve the project using [BrowserSync](https://browsersync.io/) in developer mode. It means that you will have the same project, but without minification CSS and JS files. So it allows to debug the project using the [Google Developer Tools](https://developer.chrome.com/devtools). To do this run the following command:
+**Option 2.** You may serve the project using [BrowserSync](https://browsersync.io/) in developer mode. It means that you will have the same project, but without minification CSS and JS files. So it allows to debug the project using the [Google Developer Tools](https://developer.chrome.com/devtools). To do this run the following command:
 ```
 $ npm run dev
 ```
@@ -72,4 +52,7 @@ Now the Restaurant Review project is available via URL: `http://localhost:3000`
 Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write. 
 
 ### Copyrights
-Thanks to [Iconfinder](https://www.iconfinder.com/) and [DinosoftLabs](https://www.iconfinder.com/dinosoftlabs) for `manifest.json` icons.
+This project uses open source libraries:
+  - [idb](https://github.com/jakearchibald/idb) for pretty promise-like interface over IndexedDB. Thanks to [Jake Archibald] (https://jakearchibald.com/)
+
+Also thanks to [Iconfinder](https://www.iconfinder.com/) and [DinosoftLabs](https://www.iconfinder.com/dinosoftlabs) for `manifest.json` icons.
